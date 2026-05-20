@@ -33,7 +33,8 @@
 		return (
 			Number(item['Albardon'] || 0) +
 			Number(item['Casposo'] || 0) +
-			Number(item['Barker'] || 0)
+			Number(item['Barker'] || 0) +
+			Number(item['Ullum'] || 0)
 		);
 	}
 
@@ -108,10 +109,11 @@
                 <th>Código Interno</th>
                 <th>Código Proveedor</th>
                 <th>Artículo</th>
-                <th>Contenedor</th>
+                <th>Contenedor Origen</th>
                 <th>Albardon</th>
                 <th>Casposo</th>
                 <th>Barker</th>
+				<th>Ullum</th>
                 <th>Total</th>
                 <th>Estado</th>
             </tr>
@@ -133,6 +135,8 @@
                     <td>{item['Casposo']}</td>
 
                     <td>{item['Barker']}</td>
+					
+					<td>{item['Ullum']}</td>
 
                     <td>{getTotal(item)}</td>
 
