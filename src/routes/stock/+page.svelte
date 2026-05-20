@@ -81,6 +81,10 @@
 		<a href="/stock/nuevo" class="nuevo-btn">
 			+ Nuevo Movimiento
 		</a>
+
+		<a href="/stock/articulos/nuevo" class="articulo-btn">
+			+ Agregar Artículo
+		</a>
 	</div>
 </div>
 
@@ -252,6 +256,19 @@
 }
 
 .nuevo-btn:hover {
+	opacity: 0.9;
+}
+
+.articulo-btn {
+	background: #7c3aed;
+	color: white;
+	padding: 10px 16px;
+	border-radius: 8px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.articulo-btn:hover {
 	opacity: 0.9;
 }
 </style>
