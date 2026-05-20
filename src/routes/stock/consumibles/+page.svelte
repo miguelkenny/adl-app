@@ -51,6 +51,7 @@
 					Albardon: 0,
 					Casposo: 0,
 					Barker: 0,
+					Ullum:0,
 					Total: 0
 				};
 			}
@@ -58,6 +59,7 @@
 			resultado[consumible].Albardon += Number(item['Albardon'] || 0);
 			resultado[consumible].Casposo += Number(item['Casposo'] || 0);
 			resultado[consumible].Barker += Number(item['Barker'] || 0);
+			resultado[consumible].Ullum += Number(item['Ullum'] || 0);
 			resultado[consumible].Total += getTotalStock(item);
 		});
 
@@ -105,6 +107,7 @@
 						<th>Albardon</th>
 						<th>Casposo</th>
 						<th>Barker</th>
+						<th>Ullum</th>
 						<th>Total</th>
 					</tr>
 				</thead>
@@ -116,6 +119,7 @@
 							<td>{item.Albardon}</td>
 							<td>{item.Casposo}</td>
 							<td>{item.Barker}</td>
+							<td>{item.Ullum}</td>
 							<td class:itemCritico={item.Total <= 10}>
 								{item.Total}
 							</td>
