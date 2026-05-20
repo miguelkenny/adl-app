@@ -132,7 +132,7 @@
 		background: rgba(255, 255, 255, 0.08);
 	}
 
-	li[aria-current='page'] a {
+	li[aria-current='page'] > a {
 		background: #2563eb;
 	}
 
@@ -170,7 +170,6 @@
 	}
 
 	.submenu a:hover {
-		background: #f3f4f6;
 		color: #2563eb;
 	}
 
