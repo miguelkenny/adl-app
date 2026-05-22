@@ -104,61 +104,63 @@
 {:else}
 	<p>Total artículos: {stockFiltrado.length}</p>
 
-	<table>
-		<thead>
-            <tr>
-                <th>Código Interno</th>
-                <th>Código Proveedor</th>
-                <th>Artículo</th>
-                <th>Contenedor Origen</th>
-                <th>Albardon</th>
-                <th>Casposo</th>
-                <th>Barker</th>
-				<th>Ullum</th>
-				<th>Taller Albardon</th>
-                <th>Total</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-
-		<tbody>
-			{#each stockFiltrado as item}
+	<div class="table-container">
+		<table>
+			<thead>
 				<tr>
-					<td>{getArticuloData(item['Articulo'])['Codigo Interno']}</td>
-
-                    <td>{getArticuloData(item['Articulo'])['Codigo Proveedor']}</td>
-
-                    <td>{item['Articulo']}</td>
-
-                    <td>{getArticuloData(item['Articulo'])['Contenedor']}</td>
-
-                    <td>{item['Albardon']}</td>
-
-                    <td>{item['Casposo']}</td>
-
-                    <td>{item['Barker']}</td>
-					
-					<td>{item['Ullum']}</td>
-
-					<td>{item['Taller Albardon']}</td>
-
-                    <td>{getTotal(item)}</td>
-
-                    <td>
-                        <span class={getEstado(item)}>
-                            {#if getEstado(item) === 'agotado'}
-                                Agotado
-                            {:else if getEstado(item) === 'reponer'}
-                                Reponer
-                            {:else}
-                                OK
-                            {/if}
-                        </span>
-                    </td>
+					<th>Código Interno</th>
+					<th>Código Proveedor</th>
+					<th>Artículo</th>
+					<th>Contenedor Origen</th>
+					<th>Albardon</th>
+					<th>Casposo</th>
+					<th>Barker</th>
+					<th>Ullum</th>
+					<th>Taller Albardon</th>
+					<th>Total</th>
+					<th>Estado</th>
 				</tr>
-			{/each}
-		</tbody>
-	</table>
+			</thead>
+
+			<tbody>
+				{#each stockFiltrado as item}
+					<tr>
+						<td>{getArticuloData(item['Articulo'])['Codigo Interno']}</td>
+
+						<td>{getArticuloData(item['Articulo'])['Codigo Proveedor']}</td>
+
+						<td>{item['Articulo']}</td>
+
+						<td>{getArticuloData(item['Articulo'])['Contenedor']}</td>
+
+						<td>{item['Albardon']}</td>
+
+						<td>{item['Casposo']}</td>
+
+						<td>{item['Barker']}</td>
+						
+						<td>{item['Ullum']}</td>
+
+						<td>{item['Taller Albardon']}</td>
+
+						<td>{getTotal(item)}</td>
+
+						<td>
+							<span class={getEstado(item)}>
+								{#if getEstado(item) === 'agotado'}
+									Agotado
+								{:else if getEstado(item) === 'reponer'}
+									Reponer
+								{:else}
+									OK
+								{/if}
+							</span>
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
 {/if}
 
 <style>
@@ -279,4 +281,10 @@
 .articulo-btn:hover {
 	opacity: 0.9;
 }
+
+.table-container {
+	width: 100%;
+	overflow-x: auto;
+}
+
 </style>
