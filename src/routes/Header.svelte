@@ -1,6 +1,7 @@
 <script>
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+	let menuOpen = false;
 </script>
 
 <header>
@@ -10,22 +11,32 @@
 			<span>Control Operativo y Logístico</span>
 		</a>
 	</div>
-
-	<nav>
+	<button
+		class="menu-btn"
+		on:click={() => (menuOpen = !menuOpen)}
+	>
+		☰
+	</button>
+	<nav class:open={menuOpen}>
 		<ul>
 			<li aria-current={page.url.pathname === '/' ? 'page' : undefined}>
-				<a href={resolve('/')}>Dashboard</a>
+				<a href={resolve('/')}
+				on:click={() => (menuOpen = false)}
+				>Dashboard</a>
 			</li>
 
 			<li aria-current={page.url.pathname.startsWith('/compras') ? 'page' : undefined}>
-				<a href={resolve('/compras')}>Compras</a>
+				<a href={resolve('/compras')}
+				on:click={() => (menuOpen = false)}
+				>Compras</a>
 			</li>
 
 			<li
 				class="dropdown"
 				aria-current={page.url.pathname.startsWith('/stock') ? 'page' : undefined}
 			>
-				<a href={resolve('/stock')}>Stock ▾</a>
+				<a href={resolve('/stock')}
+				on:click={() => (menuOpen = false)}>Stock ▾</a>
 
 				<ul class="submenu">
 					<li>
@@ -46,7 +57,8 @@
 				class="dropdown"
 				aria-current={page.url.pathname.startsWith('/mantenimiento') ? 'page' : undefined}
 			>
-				<a href={resolve('/mantenimiento')}>Mantenimiento ▾</a>
+				<a href={resolve('/mantenimiento')}
+				on:click={() => (menuOpen = false)}>Mantenimiento ▾</a>
 
 				<ul class="submenu">
 					<li>
@@ -69,7 +81,8 @@
 				</ul>
 			</li>
 			<li aria-current={page.url.pathname.startsWith('/operaciones') ? 'page' : undefined}>
-				<a href={resolve('/operaciones')}>
+				<a href={resolve('/operaciones')}
+				on:click={() => (menuOpen = false)}>
 					Operaciones
 				</a>
 			</li>
@@ -182,15 +195,74 @@
 		display: block;
 	}
 	
-	@media (max-width: 768px) {
-		header {
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 16px;
-		}
-
-		nav ul {
-			flex-wrap: wrap;
-		}
+	.menu-btn {
+		display: none;
+		background: transparent;
+		border: none;
+		color: white;
+		font-size: 28px;
+		cursor: pointer;
 	}
+
+	@media (max-width: 768px) {
+
+	header {
+		flex-wrap: wrap;
+		padding: 16px;
+	}
+
+	.menu-btn {
+		display: block;
+	}
+
+	nav {
+		width: 100%;
+		display: none;
+	}
+
+	nav.open {
+		display: block;
+	}
+
+	nav ul {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 8px;
+		margin-top: 16px;
+	}
+
+	nav a {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.dropdown .submenu {
+		position: static;
+		display: block;
+		background: #1f2937;
+		box-shadow: none;
+		margin-top: 6px;
+		border-radius: 8px;
+		padding: 6px;
+	}
+
+	.submenu a {
+		color: white;
+		padding-left: 24px;
+	}
+
+	.submenu a:hover {
+		background: rgba(255,255,255,0.08);
+		color: white;
+	}
+
+	.logo h1 {
+		font-size: 20px;
+	}
+
+	.logo span {
+		font-size: 11px;
+	}
+}
 </style>
