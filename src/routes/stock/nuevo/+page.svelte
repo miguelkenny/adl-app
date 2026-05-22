@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 
 	const BASE_URL =
-		'https://script.google.com/macros/s/AKfycbxkK3A3nM4IoOL0FZjKgkcUGYnjU4OOVn-iGmbMTJtGrflKBKCDXIpbj9xytEBpE6Zs5Q/exec';
+		'https://script.google.com/macros/s/AKfycbwEpI6kmBk5uBuz-t4mrMpobOolS4zsVc8ZfDFM6D69ZfTaSKtKqS0CJlC6vL1sCcOVPQ/exec';
 
 	const ARTICULOS_API = `${BASE_URL}?sheet=Articulos`;
 	const ALMACENES_API = `${BASE_URL}?sheet=Almacenes`;

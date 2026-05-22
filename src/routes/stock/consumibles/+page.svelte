@@ -1,6 +1,6 @@
 <script>
 	const BASE_URL =
-		'https://script.google.com/macros/s/AKfycbwN44dwbnjzjzR8SUV1P6DdAPosbGQn1HCzd7yxnxgV8kTi30CEpFeFqza-RAlkcWqfrg/exec';
+		'https://script.google.com/macros/s/AKfycbwEpI6kmBk5uBuz-t4mrMpobOolS4zsVc8ZfDFM6D69ZfTaSKtKqS0CJlC6vL1sCcOVPQ/exec';
 
 	const STOCK_API = `${BASE_URL}?sheet=Stock`;
 	const ARTICULOS_API = `${BASE_URL}?sheet=Articulos`;

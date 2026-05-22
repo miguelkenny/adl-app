@@ -2,7 +2,7 @@
 	let guardando = false;
 
 	const API_URL =
-		'https://script.google.com/macros/s/AKfycbxQOTdHkJDhaNZSLVeu2oh0b8hOL3i2H5t9ddusdT8durwkF_HJf1hrOSdE2uxyQHZrcA/exec';
+		'https://script.google.com/macros/s/AKfycbwEpI6kmBk5uBuz-t4mrMpobOolS4zsVc8ZfDFM6D69ZfTaSKtKqS0CJlC6vL1sCcOVPQ/exec';
 
 	let articulo = {
 		codigoProveedor: '',

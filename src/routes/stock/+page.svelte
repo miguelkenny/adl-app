@@ -34,7 +34,8 @@
 			Number(item['Albardon'] || 0) +
 			Number(item['Casposo'] || 0) +
 			Number(item['Barker'] || 0) +
-			Number(item['Ullum'] || 0)
+			Number(item['Ullum'] || 0) +
+			Number(item['Taller Albardon'] || 0)
 		);
 	}
 
@@ -114,6 +115,7 @@
                 <th>Casposo</th>
                 <th>Barker</th>
 				<th>Ullum</th>
+				<th>Taller Albardon</th>
                 <th>Total</th>
                 <th>Estado</th>
             </tr>
@@ -137,6 +139,8 @@
                     <td>{item['Barker']}</td>
 					
 					<td>{item['Ullum']}</td>
+
+					<td>{item['Taller Albardon']}</td>
 
                     <td>{getTotal(item)}</td>
 
