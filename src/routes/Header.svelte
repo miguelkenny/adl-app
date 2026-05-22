@@ -1,6 +1,7 @@
 <script>
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+
 	let menuOpen = false;
 </script>
 
@@ -11,44 +12,68 @@
 			<span>Control Operativo y Logístico</span>
 		</a>
 	</div>
+
 	<button
 		class="menu-btn"
 		on:click={() => (menuOpen = !menuOpen)}
 	>
 		☰
 	</button>
-	<nav class:open={menuOpen}>
+
+	<nav class={menuOpen ? 'open' : ''}>
 		<ul>
 			<li aria-current={page.url.pathname === '/' ? 'page' : undefined}>
-				<a href={resolve('/')}
-				on:click={() => (menuOpen = false)}
-				>Dashboard</a>
+				<a
+					href={resolve('/')}
+					on:click={() => (menuOpen = false)}
+				>
+					Dashboard
+				</a>
 			</li>
 
 			<li aria-current={page.url.pathname.startsWith('/compras') ? 'page' : undefined}>
-				<a href={resolve('/compras')}
-				on:click={() => (menuOpen = false)}
-				>Compras</a>
+				<a
+					href={resolve('/compras')}
+					on:click={() => (menuOpen = false)}
+				>
+					Compras
+				</a>
 			</li>
 
 			<li
 				class="dropdown"
 				aria-current={page.url.pathname.startsWith('/stock') ? 'page' : undefined}
 			>
-				<a href={resolve('/stock')}
-				on:click={() => (menuOpen = false)}>Stock ▾</a>
+				<a href={resolve('/stock')}>
+					Stock ▾
+				</a>
 
 				<ul class="submenu">
 					<li>
-						<a href={resolve('/stock')}>Stock General</a>
+						<a
+							href={resolve('/stock')}
+							on:click={() => (menuOpen = false)}
+						>
+							Stock General
+						</a>
 					</li>
 
 					<li>
-						<a href={resolve('/stock/consumibles')}>Consumibles</a>
+						<a
+							href={resolve('/stock/consumibles')}
+							on:click={() => (menuOpen = false)}
+						>
+							Consumibles
+						</a>
 					</li>
 
 					<li>
-						<a href={resolve('/stock/nuevo')}>Nuevo Movimiento</a>
+						<a
+							href={resolve('/stock/nuevo')}
+							on:click={() => (menuOpen = false)}
+						>
+							Nuevo Movimiento
+						</a>
 					</li>
 				</ul>
 			</li>
@@ -57,32 +82,45 @@
 				class="dropdown"
 				aria-current={page.url.pathname.startsWith('/mantenimiento') ? 'page' : undefined}
 			>
-				<a href={resolve('/mantenimiento')}
-				on:click={() => (menuOpen = false)}>Mantenimiento ▾</a>
+				<a href={resolve('/mantenimiento')}>
+					Mantenimiento ▾
+				</a>
 
 				<ul class="submenu">
 					<li>
-						<a href={resolve('/mantenimiento')}>
+						<a
+							href={resolve('/mantenimiento')}
+							on:click={() => (menuOpen = false)}
+						>
 							Solicitudes
 						</a>
 					</li>
 
 					<li>
-						<a href={resolve('/partes/vehiculos')}>
+						<a
+							href={resolve('/partes/vehiculos')}
+							on:click={() => (menuOpen = false)}
+						>
 							Partes Vehículos
 						</a>
 					</li>
 
 					<li>
-						<a href={resolve('/partes/equipos')}>
+						<a
+							href={resolve('/partes/equipos')}
+							on:click={() => (menuOpen = false)}
+						>
 							Partes Equipos
 						</a>
 					</li>
 				</ul>
 			</li>
+
 			<li aria-current={page.url.pathname.startsWith('/operaciones') ? 'page' : undefined}>
-				<a href={resolve('/operaciones')}
-				on:click={() => (menuOpen = false)}>
+				<a
+					href={resolve('/operaciones')}
+					on:click={() => (menuOpen = false)}
+				>
 					Operaciones
 				</a>
 			</li>
@@ -123,6 +161,10 @@
 		margin-top: 2px;
 	}
 
+	nav {
+		transition: all 0.2s ease;
+	}
+
 	nav ul {
 		display: flex;
 		gap: 16px;
@@ -144,6 +186,7 @@
 		font-weight: 600;
 		font-size: 14px;
 		transition: all 0.2s ease;
+		display: block;
 	}
 
 	nav a:hover {
@@ -164,13 +207,17 @@
 		top: 100%;
 		left: 0;
 		background: white;
-		min-width: 180px;
+		min-width: 220px;
 		border-radius: 10px;
 		box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 		padding: 8px 0;
 		list-style: none;
 		margin-top: 8px;
 		z-index: 1000;
+	}
+
+	.dropdown:hover .submenu {
+		display: block;
 	}
 
 	.submenu li {
@@ -188,13 +235,10 @@
 	}
 
 	.submenu a:hover {
+		background: #f3f4f6;
 		color: #2563eb;
 	}
 
-	.dropdown:hover .submenu {
-		display: block;
-	}
-	
 	.menu-btn {
 		display: none;
 		background: transparent;
@@ -206,63 +250,67 @@
 
 	@media (max-width: 768px) {
 
-	header {
-		flex-wrap: wrap;
-		padding: 16px;
-	}
+		header {
+			flex-wrap: wrap;
+			padding: 16px;
+		}
 
-	.menu-btn {
-		display: block;
-	}
+		.logo {
+			flex: 1;
+		}
 
-	nav {
-		width: 100%;
-		display: none;
-	}
+		.logo h1 {
+			font-size: 20px;
+		}
 
-	nav.open {
-		display: block;
-	}
+		.logo span {
+			font-size: 11px;
+		}
 
-	nav ul {
-		flex-direction: column;
-		align-items: stretch;
-		gap: 8px;
-		margin-top: 16px;
-	}
+		.menu-btn {
+			display: block;
+		}
 
-	nav a {
-		display: block;
-		width: 100%;
-		box-sizing: border-box;
-	}
+		nav {
+			width: 100%;
+			display: none;
+		}
 
-	.dropdown .submenu {
-		position: static;
-		display: block;
-		background: #1f2937;
-		box-shadow: none;
-		margin-top: 6px;
-		border-radius: 8px;
-		padding: 6px;
-	}
+		nav.open {
+			display: block;
+		}
 
-	.submenu a {
-		color: white;
-		padding-left: 24px;
-	}
+		nav ul {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 8px;
+			margin-top: 16px;
+		}
 
-	.submenu a:hover {
-		background: rgba(255,255,255,0.08);
-		color: white;
-	}
+		nav a {
+			width: 100%;
+			box-sizing: border-box;
+		}
 
-	.logo h1 {
-		font-size: 20px;
-	}
+		.dropdown .submenu {
+			position: static;
+			display: block;
+			background: #1f2937;
+			box-shadow: none;
+			margin-top: 6px;
+			border-radius: 8px;
+			padding: 6px;
+		}
 
-	.logo span {
-		font-size: 11px;
+		.submenu a {
+			color: white;
+			padding-left: 24px;
+			border-radius: 8px;
+		}
+
+		.submenu a:hover {
+			background: rgba(255,255,255,0.08);
+			color: white;
+		}
 	}
-}
 </style>
