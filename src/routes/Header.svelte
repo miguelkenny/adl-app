@@ -68,6 +68,11 @@
 					</li>
 				</ul>
 			</li>
+			<li aria-current={page.url.pathname.startsWith('/operaciones') ? 'page' : undefined}>
+				<a href={resolve('/operaciones')}>
+					Operaciones
+				</a>
+			</li>
 		</ul>
 	</nav>
 </header>
