@@ -14,8 +14,9 @@
 	</div>
 
 	<button
+		type="button"
 		class="menu-btn"
-		on:click={() => (menuOpen = !menuOpen)}
+		onclick={() => (menuOpen = !menuOpen)}
 	>
 		☰
 	</button>
@@ -25,7 +26,7 @@
 			<li aria-current={page.url.pathname === '/' ? 'page' : undefined}>
 				<a
 					href={resolve('/')}
-					on:click={() => (menuOpen = false)}
+					onclick={() => (menuOpen = false)}
 				>
 					Dashboard
 				</a>
@@ -34,7 +35,7 @@
 			<li aria-current={page.url.pathname.startsWith('/compras') ? 'page' : undefined}>
 				<a
 					href={resolve('/compras')}
-					on:click={() => (menuOpen = false)}
+					onclick={() => (menuOpen = false)}
 				>
 					Compras
 				</a>
@@ -52,7 +53,7 @@
 					<li>
 						<a
 							href={resolve('/stock')}
-							on:click={() => (menuOpen = false)}
+							onclick={() => (menuOpen = false)}
 						>
 							Stock General
 						</a>
@@ -61,7 +62,7 @@
 					<li>
 						<a
 							href={resolve('/stock/consumibles')}
-							on:click={() => (menuOpen = false)}
+							onclick={() => (menuOpen = false)}
 						>
 							Consumibles
 						</a>
@@ -70,7 +71,7 @@
 					<li>
 						<a
 							href={resolve('/stock/nuevo')}
-							on:click={() => (menuOpen = false)}
+							onclick={() => (menuOpen = false)}
 						>
 							Nuevo Movimiento
 						</a>
@@ -90,7 +91,7 @@
 					<li>
 						<a
 							href={resolve('/mantenimiento')}
-							on:click={() => (menuOpen = false)}
+							onclick={() => (menuOpen = false)}
 						>
 							Solicitudes
 						</a>
@@ -99,7 +100,7 @@
 					<li>
 						<a
 							href={resolve('/partes/vehiculos')}
-							on:click={() => (menuOpen = false)}
+							onclick={() => (menuOpen = false)}
 						>
 							Partes Vehículos
 						</a>
@@ -108,7 +109,7 @@
 					<li>
 						<a
 							href={resolve('/partes/equipos')}
-							on:click={() => (menuOpen = false)}
+							onclick={() => (menuOpen = false)}
 						>
 							Partes Equipos
 						</a>
@@ -119,7 +120,7 @@
 			<li aria-current={page.url.pathname.startsWith('/operaciones') ? 'page' : undefined}>
 				<a
 					href={resolve('/operaciones')}
-					on:click={() => (menuOpen = false)}
+					onclick={() => (menuOpen = false)}
 				>
 					Operaciones
 				</a>
