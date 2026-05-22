@@ -170,55 +170,57 @@
 {#if loading}
 	<Loader />
 {:else}
-	<table border="1">
-	<thead>
-		<tr>
-			<th>Fecha</th>
-			<th>Equipo</th>
-			<th>Especificacion</th>
-			<th>Descripcion</th>
-			<th>Codigo / N° de Parte</th>
-			<th>Días</th>
-			<th>Estado</th>
-		</tr>
-	</thead>
-    
-	<tbody>
-		{#each solicitudesFiltradas as item}
-			<tr on:click={() => pedidoSeleccionado = item}>
-				<td>{item.fechaFormateada}</td>
-				<td>{item['EQUIPO']}</td>
-				<td>{item['ESPECIFICACION']}</td>
-				<td>{item['DESCRIPCION']}</td>
-				<td>{item['CODIGO / NUMERO DE PARTE']}</td>
-				<td>
-					{#if item['ESTADO'] === 'Completado' || item['ESTADO'] === 'Cancelado o Suspendido'}
-						—
-					{:else}
-						{diasTranscurridos(item.timestampOriginal)}
-					{/if}
-				</td>
-				<td>
-					<select
-						class={`estado-select ${(item['ESTADO'] || 'Pendiente')
-								.trim()
-								.replace(/\s+/g, '-')
-								.toLowerCase()}`}
-						value={item['ESTADO'] || item['Pendiente']}
-						on:change={(e) => actualizarEstado(item, e.target.value)}
-					>
-						<option>Pendiente</option>
-						<option>Presupuestando</option>
-						<option>En proceso compra</option>
-						<option>Comprado esperando llegada</option>
-						<option>Completado</option>
-						<option>Cancelado o Suspendido</option>
-					</select>
-				</td>
-			</tr>
-		{/each}
-	</tbody>
-</table>
+	<div class="table-container">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Equipo</th>
+					<th>Especificacion</th>
+					<th>Descripcion</th>
+					<th>Codigo / N° de Parte</th>
+					<th>Días</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				{#each solicitudesFiltradas as item}
+					<tr on:click={() => pedidoSeleccionado = item}>
+						<td>{item.fechaFormateada}</td>
+						<td>{item['EQUIPO']}</td>
+						<td>{item['ESPECIFICACION']}</td>
+						<td>{item['DESCRIPCION']}</td>
+						<td>{item['CODIGO / NUMERO DE PARTE']}</td>
+						<td>
+							{#if item['ESTADO'] === 'Completado' || item['ESTADO'] === 'Cancelado o Suspendido'}
+								—
+							{:else}
+								{diasTranscurridos(item.timestampOriginal)}
+							{/if}
+						</td>
+						<td>
+							<select
+								class={`estado-select ${(item['ESTADO'] || 'Pendiente')
+										.trim()
+										.replace(/\s+/g, '-')
+										.toLowerCase()}`}
+								value={item['ESTADO'] || item['Pendiente']}
+								on:change={(e) => actualizarEstado(item, e.target.value)}
+							>
+								<option>Pendiente</option>
+								<option>Presupuestando</option>
+								<option>En proceso compra</option>
+								<option>Comprado esperando llegada</option>
+								<option>Completado</option>
+								<option>Cancelado o Suspendido</option>
+							</select>
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
 {/if}
 
 {#if pedidoSeleccionado}
@@ -313,20 +315,24 @@
 	select {
 		padding: 10px;
 		margin-bottom: 20px;
-		width: 350px;
+		width: 100%;
+		max-width: 350px;
 		border-radius: 8px;
 		border: 1px solid #ccc;
 		font-size: 14px;
+		box-sizing: border-box;
 	}
 
 	input {
 		padding: 10px;
 		margin-left: 0px;
 		margin-bottom: 20px;
-		width: 350px;
+		width: 100%;
+		max-width: 350px;
 		border-radius: 8px;
 		border: 1px solid #ccc;
 		font-size: 14px;
+		box-sizing: border-box;
 	}
 
 	.cards {
@@ -373,8 +379,11 @@
 	}
 
 	.card {
-		cursor: pointer;
-		transition: transform 0.1s ease;
+		padding: 20px;
+		border-radius: 12px;
+		color: white;
+		flex: 1 1 220px;
+		font-family: Arial, sans-serif;
 	}
 
 	.card:hover {
@@ -447,41 +456,78 @@
 	color: white;
 	font-weight: bold;
 	cursor: pointer;
-}
+	}
 
-/* estados */
-.Pendiente {
-	background: #dc3545;
-}
+	/* estados */
+	.Pendiente {
+		background: #dc3545;
+	}
 
-.Presupuestando {
-	background: #fd7e14;
-}
+	.Presupuestando {
+		background: #fd7e14;
+	}
 
-.En-proceso-compra {
-	background: #0d6efd;
-}
+	.En-proceso-compra {
+		background: #0d6efd;
+	}
 
-.Comprado-esperando-llegada {
-	background: #6f42c1;
-}
+	.Comprado-esperando-llegada {
+		background: #6f42c1;
+	}
 
-.Completado {
-	background: #198754;
-}
+	.Completado {
+		background: #198754;
+	}
 
-.Cancelado-o-Suspendido {
-	background: #6c757d;
-}
+	.Cancelado-o-Suspendido {
+		background: #6c757d;
+	}
 
-button {
-	padding: 10px 10px;
-	border: none;
-	border-radius: 8px;
-	background: #6c757d;
-	color: white;
-	cursor: pointer;
-	width: 350px;
-	margin-bottom: 10px;
-}
+	button {
+		padding: 10px 10px;
+		border: none;
+		border-radius: 8px;
+		background: #6c757d;
+		color: white;
+		cursor: pointer;
+		width: 100%;
+		max-width: 350px;
+		margin-bottom: 10px;
+	}
+
+	.table-container {
+		width: 100%;
+		overflow-x: auto;
+	}
+
+	@media (max-width: 768px) {
+
+		h1 {
+			font-size: 24px;
+		}
+
+		.cards {
+			flex-direction: column;
+		}
+
+		.card {
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			font-size: 13px;
+		}
+
+		.modal {
+			width: 95%;
+			padding: 20px;
+		}
+
+		.estado-select {
+			min-width: 180px;
+		}
+	}
 </style>
