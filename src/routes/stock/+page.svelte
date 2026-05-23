@@ -56,11 +56,26 @@
 		return 'ok';
 	}
 
-	$: stockFiltrado = stock.filter((item) =>
-		item['Articulo']
-			?.toLowerCase()
-			.includes(busqueda.toLowerCase())
-	);
+	$: stockFiltrado = stock.filter((item) => {
+
+		const busquedaLower = busqueda.toLowerCase();
+
+		const articulo = item['Articulo']?.toLowerCase() || '';
+
+		const articuloData = getArticuloData(item['Articulo']);
+
+		const codigoInterno =
+			String(articuloData['Codigo Interno'] || '').toLowerCase();
+
+		const codigoProveedor =
+			String(articuloData['Codigo Proveedor'] || '').toLowerCase();
+
+		return (
+			articulo.includes(busquedaLower) ||
+			codigoInterno.includes(busquedaLower) ||
+			codigoProveedor.includes(busquedaLower)
+		);
+	});
 
     function getArticuloData(nombreArticulo) {
         return (
