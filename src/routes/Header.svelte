@@ -93,7 +93,7 @@
 							href={resolve('/mantenimiento')}
 							onclick={() => (menuOpen = false)}
 						>
-							Solicitudes
+							Solicitudes de Mantenimiento
 						</a>
 					</li>
 
