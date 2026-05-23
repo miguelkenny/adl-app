@@ -7,6 +7,8 @@
 	let busqueda = '';
 	let pedidoSeleccionado = null;
     let loading = true;
+	let paginaActual = 1;
+	const filasPorPagina = 50;
 
 	const API_URL = 'https://script.google.com/macros/s/AKfycbxzgWF1fHx0_yuIFB0HaJ3oo1pGU8wW_2Wyh-B0-jOo0aO_R-4xnJxSNm5LF9VDzKVwYQ/exec';
 
@@ -82,6 +84,19 @@
 			(item) => item['ESTADO'] === 'Completado'
 		).length;
 
+		$: totalPaginas = Math.ceil(
+			solicitudesFiltradas.length / filasPorPagina
+		);
+
+		$: solicitudesPaginadas = solicitudesFiltradas.slice(
+			(paginaActual - 1) * filasPorPagina,
+			paginaActual * filasPorPagina
+		);
+
+		$: if (paginaActual > totalPaginas) {
+			paginaActual = 1;
+		}
+
 	async function actualizarEstado(item, nuevoEstado) {
 		try {
 			const response = await fetch(API_URL, {
@@ -114,6 +129,7 @@
 
 		return Math.floor(diferencia / (1000 * 60 * 60 * 24));
 	}
+
 </script>
 
 <h1>ADL Compras</h1>
@@ -185,7 +201,7 @@
 			</thead>
 			
 			<tbody>
-				{#each solicitudesFiltradas as item}
+				{#each solicitudesPaginadas as item}
 					<tr on:click={() => pedidoSeleccionado = item}>
 						<td>{item.fechaFormateada}</td>
 						<td>{item['EQUIPO']}</td>
@@ -220,6 +236,27 @@
 				{/each}
 			</tbody>
 		</table>
+	</div>
+	<div class="paginacion">
+
+		<button
+			on:click={() => paginaActual--}
+			disabled={paginaActual === 1}
+		>
+			← Anterior
+		</button>
+
+		<span>
+			Página {paginaActual} de {totalPaginas || 1}
+		</span>
+
+		<button
+			on:click={() => paginaActual++}
+			disabled={paginaActual === totalPaginas}
+		>
+			Siguiente →
+		</button>
+
 	</div>
 {/if}
 
@@ -271,13 +308,40 @@
 
 	th,
 	td {
-		padding: 12px;
+		padding: 10px;
 		border: 1px solid #ddd;
 		text-align: left;
+		vertical-align: top;
+
+		white-space: normal;
+		word-break: break-word;
+		overflow-wrap: break-word;
+		line-height: 1.4;
 	}
 
-	th {
+	td {
+		white-space: normal;
+	}
+
+	/* cabecera fija */
+
+	thead th {
+		position: sticky;
+		top: 0;
 		background: #f5f5f5;
+		z-index: 20;
+	}
+
+	th:nth-child(3),
+	td:nth-child(3) {
+		max-width: 800px;
+		width: 800px;
+	}
+
+	th:first-child,
+	td:first-child {
+		min-width: 140px;
+		white-space: nowrap;
 	}
 
 	.estado {
@@ -450,12 +514,9 @@
 	}
 
 	.estado-select {
-	padding: 8px 12px;
-	border: none;
-	border-radius: 8px;
-	color: white;
-	font-weight: bold;
-	cursor: pointer;
+		width: 100%;
+		min-width: 140px;
+		max-width: 180px;
 	}
 
 	/* estados */
@@ -498,6 +559,25 @@
 	.table-container {
 		width: 100%;
 		overflow-x: auto;
+		border-radius: 12px;
+		border: 1px solid #ddd;
+		max-height: 75vh;
+		overflow-y: auto;
+	}
+
+	.paginacion {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 16px;
+		margin-top: 20px;
+		flex-wrap: wrap;
+	}
+
+	.paginacion button {
+		width: auto;
+		max-width: none;
+		padding: 10px 16px;
 	}
 
 	@media (max-width: 768px) {
