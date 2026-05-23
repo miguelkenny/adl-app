@@ -4,6 +4,10 @@
 			titulo: 'Parte Diario Hincado Ullum Alfa 2026',
 			url: 'https://forms.gle/ka6dn4NYi4neNRqw8'
 		},
+        {
+            titulo: 'Parte Diario Perforación Casposo',
+            url: 'https://forms.gle/cAKphUJAneNmtx5w6'
+        },
 		{
 			titulo: 'Registro Movimiento de Móviles',
 			url: 'https://forms.gle/ZCgTcmwmna3qYffX7'
@@ -27,7 +31,11 @@
 		{
 			titulo: 'Solicitud de Mantenimiento',
 			url: 'https://forms.gle/Qq3rBrRrN1F7tqam6'
-		}
+		},
+        {
+            titulo: 'V0624 Registro Movimiento de Moviles',
+            url: 'https://forms.gle/aaXNGDaWGXJ5p8Dd8'
+        }
 	];
 
 	const manuales = [
