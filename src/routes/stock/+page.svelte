@@ -126,6 +126,7 @@
 					<th>Código Interno</th>
 					<th>Código Proveedor</th>
 					<th>Artículo</th>
+					<th>Marca</th>
 					<th>Contenedor Origen</th>
 					<th>Albardon</th>
 					<th>Casposo</th>
@@ -145,6 +146,8 @@
 						<td>{getArticuloData(item['Articulo'])['Codigo Proveedor']}</td>
 
 						<td>{item['Articulo']}</td>
+
+						<td>{getArticuloData(item['Articulo'])['Marca']}</td>
 
 						<td>{getArticuloData(item['Articulo'])['Contenedor']}</td>
 

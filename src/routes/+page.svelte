@@ -3,7 +3,7 @@
 <div class="stats">
 	<div class="stat-card">
 		<h3>--</h3>
-		<p>Solicitudes pendientes</p>
+		<p>Solicitudes De Compras Pendientes</p>
 	</div>
 
 	<div class="stat-card warning">
