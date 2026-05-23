@@ -8,7 +8,7 @@
 <header>
 	<div class="logo">
 		<a href={resolve('/')}>
-			<h1>ADL ERP</h1>
+			<h1>ADL / ANDESITA ERP</h1>
 			<span>Control Operativo y Logístico</span>
 		</a>
 	</div>
@@ -119,10 +119,10 @@
 
 			<li aria-current={page.url.pathname.startsWith('/operaciones') ? 'page' : undefined}>
 				<a
-					href={resolve('/operaciones')}
+					href={resolve('/formularios')}
 					onclick={() => (menuOpen = false)}
 				>
-					Operaciones
+					Formularios
 				</a>
 			</li>
 		</ul>
