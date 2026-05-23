@@ -70,6 +70,8 @@
                 <th>Móvil</th>
                 <th>Tipo</th>
                 <th>Odómetro</th>
+				<th>Trabajos Realizados</th>
+				<th>Insumos Utilizados</th>
                 <th>Próx. Service KM</th>
             </tr>
         </thead>
@@ -81,7 +83,8 @@
                     <td>{item['MOVIL']}</td>
                     <td>{item['TIPO DE MANTENIMIENTO']}</td>
                     <td>{item['ODOMETRO']}</td>
-
+					<td>{item['DESCRIPCION DE LOS TRABAJOS REALIZADOS']}</td>
+					<td>{item['REPUESTOS/CONSUMIBLES UTILIZADOS']}</td>
                     <td class={alertaKm(item)}>
                         {item['PROXIMO SERVICE - KM.']}
                     </td>
@@ -102,7 +105,7 @@
 			<p><strong>Móvil:</strong> {parteSeleccionado['MOVIL']}</p>
 			<p><strong>Tipo:</strong> {parteSeleccionado['TIPO DE MANTENIMIENTO']}</p>
 			<p><strong>Odómetro:</strong> {parteSeleccionado['ODOMETRO']}</p>
-			<p><strong>Horómetro:</strong> {parteSeleccionado['HOROMETRO']}</p>
+			<p><strong>Horómetro:</strong> {parteSeleccionado['INSUMOS UTILIZADOS']}</p>
 
 			<p><strong>Trabajos realizados:</strong></p>
 			<p>{parteSeleccionado['DESCRIPCION DE LOS TRABAJOS REALIZADOS']}</p>
