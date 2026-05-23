@@ -267,6 +267,7 @@
 			<h2>Detalle Solicitud</h2>
 
 			<p><strong>Fecha:</strong> {pedidoSeleccionado.fechaFormateada}</p>
+			<p><strong>Solicitado Por:</strong> {pedidoSeleccionado['Dirección de correo electrónico']}</p>
 			<p><strong>Equipo:</strong> {pedidoSeleccionado['EQUIPO']}</p>
 			<p><strong>Lugar:</strong> {pedidoSeleccionado['LUGAR']}</p>
 			<p><strong>Clasificación:</strong> {pedidoSeleccionado['CLASIFICACION']}</p>

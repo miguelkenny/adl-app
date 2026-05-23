@@ -101,6 +101,7 @@
 			<h2>Detalle Parte Vehículo</h2>
 
 			<p><strong>Fecha:</strong> {parteSeleccionado['FECHA']}</p>
+			<p><strong>Informado Por:</strong> {parteSeleccionado['Dirección de correo electrónico']}</p>
 			<p><strong>Lugar:</strong> {parteSeleccionado['LUGAR DEL MANTENIMIENTO']}</p>
 			<p><strong>Móvil:</strong> {parteSeleccionado['MOVIL']}</p>
 			<p><strong>Tipo:</strong> {parteSeleccionado['TIPO DE MANTENIMIENTO']}</p>

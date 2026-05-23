@@ -101,6 +101,8 @@
 
 			<h2>Detalle Parte Equipo</h2>
 
+			<p><strong>Fecha:</strong> {parteSeleccionado['FECHA']}</p>
+			<p><strong>Informado Por:</strong> {parteSeleccionado['Dirección de correo electrónico']}</p>
 			<p><strong>Equipo:</strong> {parteSeleccionado['EQUIPO']}</p>
 			<p><strong>Ubicación:</strong> {parteSeleccionado['UBICACION']}</p>
 			<p><strong>Problema:</strong> {parteSeleccionado['PROBLEMA / SINTOMA']}</p>
