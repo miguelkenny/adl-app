@@ -1,9 +1,8 @@
 <script>
-	const BASE_URL =
-		'https://script.google.com/macros/s/AKfycbyOL2jeaK79ebykD_zfx1Eqg1yFoBFvZQPoqnL4MAlG--CPtPiBg93J6AcCpRTFbw6WbQ/exec';
+	import { PUBLIC_API_URL } from '$env/static/public';
 
-	const STOCK_API = `${BASE_URL}?sheet=Stock`;
-	const ARTICULOS_API = `${BASE_URL}?sheet=Articulos`;
+	const STOCK_API = `${PUBLIC_API_URL}?sheet=Stock`;
+	const ARTICULOS_API = `${PUBLIC_API_URL}?sheet=Articulos`;
 
 	let stock = [];
 	let articulos = [];

@@ -1,30 +1,51 @@
 <script>
-	import { usuario as usuarioStore } from '$lib/stores/auth';
 	import { goto } from '$app/navigation';
 
-	let usuario = '';
-	let password = '';
+	let password1 = '';
+	let password2 = '';
+
 	let error = '';
+	let success = '';
 	let loading = false;
 
 	import { PUBLIC_API_URL } from '$env/static/public';
 
-	async function iniciarSesion() {
+	const user =
+		JSON.parse(localStorage.getItem('user'));
+
+	async function cambiarPassword() {
 
 		error = '';
+		success = '';
+
+		if (!password1 || !password2) {
+
+			error = 'Completar todos los campos';
+			return;
+		}
+
+		if (password1 !== password2) {
+
+			error = 'Las contraseñas no coinciden';
+			return;
+		}
+
+		if (password1.length < 4) {
+
+			error = 'Mínimo 4 caracteres';
+			return;
+		}
+
 		loading = true;
 
 		try {
 
 			const response = await fetch(PUBLIC_API_URL, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'text/plain;charset=utf-8'
-				},
 				body: JSON.stringify({
-					action: 'login',
-					usuario,
-					password
+					action: 'cambiarPassword',
+					usuario: user.usuario,
+					password: password1
 				})
 			});
 
@@ -32,25 +53,24 @@
 
 			if (result.success) {
 
+				user.debeCambiar = 'NO';
+
 				localStorage.setItem(
-				'user',
-				JSON.stringify(result)
-			);
+					'user',
+					JSON.stringify(user)
+				);
 
-			usuarioStore.set(result);
+				success = 'Contraseña actualizada';
 
-			if (result.debeCambiar === 'SI') {
+				setTimeout(() => {
 
-				goto('/cambiar-password');
+					goto('/');
 
-			} else {
-
-				goto('/');
-}
+				}, 1200);
 
 			} else {
 
-				error = result.message;
+				error = result.message || 'Error';
 			}
 
 		} catch (err) {
@@ -62,34 +82,36 @@
 	}
 </script>
 
-<div class="login-container">
+<div class="container">
 
-	<div class="login-card">
+	<div class="card">
 
-		<h1>ADL ERP</h1>
+		<h1>Cambiar contraseña</h1>
 
-		<p>Iniciar sesión</p>
+		<p>
+			Debes crear una contraseña personal.
+		</p>
 
 		<input
-			type="text"
-			placeholder="Usuario"
-			bind:value={usuario}
+			type="password"
+			placeholder="Nueva contraseña"
+			bind:value={password1}
 		/>
 
 		<input
 			type="password"
-			placeholder="Contraseña"
-			bind:value={password}
+			placeholder="Repetir contraseña"
+			bind:value={password2}
 		/>
 
 		<button
-			on:click={iniciarSesion}
+			on:click={cambiarPassword}
 			disabled={loading}
 		>
 			{#if loading}
-				Ingresando...
+				Guardando...
 			{:else}
-				Ingresar
+				Guardar contraseña
 			{/if}
 		</button>
 
@@ -99,36 +121,39 @@
 			</div>
 		{/if}
 
+		{#if success}
+			<div class="success">
+				{success}
+			</div>
+		{/if}
+
 	</div>
 
 </div>
 
 <style>
 
-	.login-container {
+	.container {
 		min-height: 100vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		background: #f3f4f6;
 		padding: 20px;
-		box-sizing: border-box;
 	}
 
-	.login-card {
+	.card {
 		background: white;
 		padding: 40px;
 		border-radius: 16px;
-		box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 		width: 100%;
-		max-width: 380px;
+		max-width: 420px;
+		box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 		font-family: Arial, sans-serif;
 	}
 
 	h1 {
 		margin-top: 0;
-		margin-bottom: 10px;
-		color: #111827;
 	}
 
 	p {
@@ -142,7 +167,6 @@
 		margin-bottom: 16px;
 		border-radius: 10px;
 		border: 1px solid #d1d5db;
-		font-size: 14px;
 		box-sizing: border-box;
 	}
 
@@ -155,11 +179,6 @@
 		color: white;
 		font-weight: bold;
 		cursor: pointer;
-		font-size: 15px;
-	}
-
-	button:hover {
-		opacity: 0.95;
 	}
 
 	.error {
@@ -168,7 +187,14 @@
 		color: #991b1b;
 		padding: 10px;
 		border-radius: 8px;
-		font-size: 14px;
+	}
+
+	.success {
+		margin-top: 16px;
+		background: #dcfce7;
+		color: #166534;
+		padding: 10px;
+		border-radius: 8px;
 	}
 
 </style>

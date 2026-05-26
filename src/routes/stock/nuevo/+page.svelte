@@ -1,11 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
 
-	const BASE_URL =
-		'https://script.google.com/macros/s/AKfycbyOL2jeaK79ebykD_zfx1Eqg1yFoBFvZQPoqnL4MAlG--CPtPiBg93J6AcCpRTFbw6WbQ/exec';
+	import { PUBLIC_API_URL } from '$env/static/public';
 
-	const ARTICULOS_API = `${BASE_URL}?sheet=Articulos`;
-	const ALMACENES_API = `${BASE_URL}?sheet=Almacenes`;
+	const ARTICULOS_API = `${PUBLIC_API_URL}?sheet=Articulos`;
+	const ALMACENES_API = `${PUBLIC_API_URL}?sheet=Almacenes`;
 
 	let articulos = [];
 	let almacenes = [];

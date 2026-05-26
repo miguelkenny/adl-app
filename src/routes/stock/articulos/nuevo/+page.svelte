@@ -1,8 +1,7 @@
 <script>
 	let guardando = false;
 
-	const API_URL =
-		'https://script.google.com/macros/s/AKfycbyOL2jeaK79ebykD_zfx1Eqg1yFoBFvZQPoqnL4MAlG--CPtPiBg93J6AcCpRTFbw6WbQ/exec';
+	import { PUBLIC_API_URL } from '$env/static/public';
 
 	let articulo = {
 		codigoProveedor: '',
@@ -21,7 +20,7 @@
 		try {
 			guardando = true;
 
-			const response = await fetch(API_URL, {
+			const response = await fetch(PUBLIC_API_URL, {
 				method: 'POST',
 				body: JSON.stringify({
 					action: 'crearArticulo',
