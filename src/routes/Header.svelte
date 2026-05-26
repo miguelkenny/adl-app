@@ -2,8 +2,21 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	let menuOpen = false;
+
+	let usuario = null;
+
+	onMount(() => {
+
+		const user =
+			localStorage.getItem('user');
+
+		if (user) {
+			usuario = JSON.parse(user);
+		}
+	});
 
 	function logout() {
 
@@ -133,6 +146,22 @@
 					Formularios
 				</a>
 			</li>
+			<li class="user-info">
+
+				<div class="user-badge">
+
+					<span class="user-name">
+						{usuario?.usuario}
+					</span>
+
+					<span class="user-role">
+						{usuario?.rol}
+					</span>
+
+				</div>
+
+			</li>
+
 			<li>
 				<button
 					class="logout-btn"
@@ -289,6 +318,33 @@ li[aria-current='page'] > a {
 	background: #bb2d3b;
 }
 
+.user-info {
+	display: flex;
+	align-items: center;
+}
+
+.user-badge {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	padding: 6px 10px;
+	background: rgba(255,255,255,0.08);
+	border-radius: 8px;
+}
+
+.user-name {
+	font-size: 14px;
+	font-weight: 700;
+	color: white;
+	line-height: 1.1;
+}
+
+.user-role {
+	font-size: 11px;
+	color: #9ca3af;
+	text-transform: uppercase;
+}
+
 /* =========================
 	MOBILE
 ========================= */
@@ -363,6 +419,11 @@ li[aria-current='page'] > a {
 	.logout-btn {
 		width: 100%;
 		text-align: left;
+	}
+
+	.user-badge {
+		align-items: flex-start;
+		width: 100%;
 	}
 }
 </style>
