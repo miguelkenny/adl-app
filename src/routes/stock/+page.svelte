@@ -6,12 +6,13 @@
 	let articulos = [];
 	let loading = true;
 	let busqueda = '';
+	let paginaActual = 1;
+	let itemsPorPagina = 25;
 
-	const BASE_URL =
-		'https://script.google.com/macros/s/AKfycbwN44dwbnjzjzR8SUV1P6DdAPosbGQn1HCzd7yxnxgV8kTi30CEpFeFqza-RAlkcWqfrg/exec';
+	import { PUBLIC_API_URL } from '$env/static/public';
 
-	const STOCK_API = `${BASE_URL}?sheet=Stock`;
-	const ARTICULOS_API = `${BASE_URL}?sheet=Articulos`;
+	const STOCK_API = `${PUBLIC_API_URL}?sheet=Stock`;
+	const ARTICULOS_API = `${PUBLIC_API_URL}?sheet=Articulos`;
 
 	onMount(async () => {
 		try {
@@ -77,6 +78,19 @@
 		);
 	});
 
+	$: totalPaginas = Math.ceil(
+		stockFiltrado.length / itemsPorPagina
+	);
+
+	$: stockPaginado = stockFiltrado.slice(
+		(paginaActual - 1) * itemsPorPagina,
+		paginaActual * itemsPorPagina
+	);
+
+	$: if (busqueda) {
+		paginaActual = 1;
+	}
+
     function getArticuloData(nombreArticulo) {
         return (
             articulos.find(
@@ -139,7 +153,7 @@
 			</thead>
 
 			<tbody>
-				{#each stockFiltrado as item}
+				{#each stockPaginado as item}
 					<tr>
 						<td>{getArticuloData(item['Articulo'])['Codigo Interno']}</td>
 
@@ -178,6 +192,27 @@
 				{/each}
 			</tbody>
 		</table>
+	</div>
+	<div class="paginacion">
+
+		<button
+			on:click={() => paginaActual--}
+			disabled={paginaActual === 1}
+		>
+			← Anterior
+		</button>
+
+		<span>
+			Página {paginaActual} de {totalPaginas}
+		</span>
+
+		<button
+			on:click={() => paginaActual++}
+			disabled={paginaActual === totalPaginas}
+		>
+			Siguiente →
+		</button>
+
 	</div>
 {/if}
 
@@ -303,6 +338,29 @@
 .table-container {
 	width: 100%;
 	overflow-x: auto;
+}
+.paginacion {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 16px;
+	margin-top: 20px;
+	padding-bottom: 20px;
+}
+
+.paginacion button {
+	background: #2563eb;
+	color: white;
+	border: none;
+	padding: 10px 16px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.paginacion button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 </style>

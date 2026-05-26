@@ -405,6 +405,7 @@
 	gap: 20px;
 	margin-bottom: 20px;
 	flex-wrap: wrap;
+	padding: 14px;
 	}
 
 	.card {
