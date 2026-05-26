@@ -2,22 +2,71 @@
 	import Header from './Header.svelte';
 	import './layout.css';
 
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+
 	let { children } = $props();
+
+	let cargando = $state(true);
+
+	onMount(() => {
+
+		const user = localStorage.getItem('user');
+
+		// si estamos en login
+		if (window.location.pathname === '/login') {
+
+			cargando = false;
+			return;
+		}
+
+		// si no hay sesión
+		if (!user) {
+
+			goto('/login');
+			return;
+		}
+
+		cargando = false;
+	});
 </script>
 
-<div class="app">
-	<Header />
+{#if cargando}
 
-	<main>
-		{@render children()}
-	</main>
+	<div class="loading">
+		Cargando...
+	</div>
 
-	<footer>
-		
-	</footer>
-</div>
+{:else}
+
+	<div class="app">
+
+		{#if page.url.pathname !== '/login'}
+			<Header />
+		{/if}
+
+		<main>
+			{@render children()}
+		</main>
+
+		<footer></footer>
+
+	</div>
+
+{/if}
 
 <style>
+
+	.loading {
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-family: Arial, sans-serif;
+		font-size: 18px;
+	}
+
 	.app {
 		display: flex;
 		flex-direction: column;
@@ -28,7 +77,6 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
 		width: 100%;
 		box-sizing: border-box;
 	}
@@ -42,8 +90,10 @@
 	}
 
 	@media (min-width: 480px) {
+
 		footer {
 			padding: 12px 0;
 		}
 	}
+
 </style>

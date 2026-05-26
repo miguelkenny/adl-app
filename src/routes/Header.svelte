@@ -1,8 +1,16 @@
 <script>
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 
 	let menuOpen = false;
+
+	function logout() {
+
+		localStorage.removeItem('user');
+
+		goto('/login');
+	}
 </script>
 
 <header>
@@ -124,6 +132,14 @@
 				>
 					Formularios
 				</a>
+			</li>
+			<li>
+				<button
+					class="logout-btn"
+					onclick={logout}
+				>
+					Salir
+				</button>
 			</li>
 		</ul>
 	</nav>
@@ -257,6 +273,22 @@ li[aria-current='page'] > a {
 	cursor: pointer;
 }
 
+.logout-btn {
+	background: #dc3545;
+	color: white;
+	border: none;
+	padding: 10px 14px;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 14px;
+	cursor: pointer;
+	transition: 0.2s;
+}
+
+.logout-btn:hover {
+	background: #bb2d3b;
+}
+
 /* =========================
 	MOBILE
 ========================= */
@@ -326,6 +358,11 @@ li[aria-current='page'] > a {
 	.submenu a:hover {
 		background: rgba(255,255,255,0.08);
 		color: white;
+	}
+
+	.logout-btn {
+		width: 100%;
+		text-align: left;
 	}
 }
 </style>
