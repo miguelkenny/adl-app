@@ -565,6 +565,7 @@
 		border: 1px solid #ddd;
 		max-height: 75vh;
 		overflow-y: auto;
+		padding: 14px;
 	}
 
 	.paginacion {
