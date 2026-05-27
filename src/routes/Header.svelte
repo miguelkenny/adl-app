@@ -123,7 +123,7 @@
 							href={resolve('/partes/vehiculos')}
 							onclick={() => (menuOpen = false)}
 						>
-							Partes Vehículos
+							Parte Mant. Vehículos
 						</a>
 					</li>
 
@@ -132,7 +132,7 @@
 							href={resolve('/partes/equipos')}
 							onclick={() => (menuOpen = false)}
 						>
-							Partes Equipos
+							Parte Mant. Equipos
 						</a>
 					</li>
 				</ul>
