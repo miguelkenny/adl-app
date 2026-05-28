@@ -171,7 +171,7 @@
 
 						<td>{item['Barker']}</td>
 						
-						<td>{item['Ullum']}</td>
+						<td>{item['Ullum ALFA']}</td>
 
 						<td>{item['Taller Albardon']}</td>
 

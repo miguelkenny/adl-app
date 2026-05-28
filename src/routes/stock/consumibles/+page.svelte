@@ -3,11 +3,11 @@
 
 	const STOCK_API = `${PUBLIC_API_URL}?sheet=Stock`;
 	const ARTICULOS_API = `${PUBLIC_API_URL}?sheet=Articulos`;
-
+	
 	let stock = [];
 	let articulos = [];
 	let loading = true;
-
+	console.log(PUBLIC_API_URL);
 	async function cargarDatos() {
 		try {
 			const [stockRes, articulosRes] = await Promise.all([
