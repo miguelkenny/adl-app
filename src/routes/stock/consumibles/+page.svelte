@@ -106,7 +106,7 @@
 						<th>Albardon</th>
 						<th>Casposo</th>
 						<th>Barker</th>
-						<th>Ullum</th>
+						<th>Ullum ALFA</th>
 						<th>Total</th>
 					</tr>
 				</thead>

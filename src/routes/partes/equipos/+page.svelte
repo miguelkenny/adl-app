@@ -64,6 +64,7 @@
         <thead>
             <tr>
                 <th>Fecha</th>
+				<th>Email</th>
                 <th>Equipo</th>
                 <th>Problema/Sintoma</th>
                 <th>Motor</th>
@@ -77,6 +78,7 @@
             {#each partesFiltradas as item}
                 <tr on:click={() => parteSeleccionado = item}>
                     <td>{item['FECHA']}</td>
+					<td>{item['Dirección de correo electrónico']}</td>
                     <td>{item['EQUIPO']}</td>
                     <td>{item['PROBLEMA / SINTOMA']}</td>
                     <td>{item['MOTOR']}</td>

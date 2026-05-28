@@ -140,12 +140,13 @@
 					<th>Código Interno</th>
 					<th>Código Proveedor</th>
 					<th>Artículo</th>
+					<th>Nom. Proveedor</th>
 					<th>Marca</th>
 					<th>Contenedor Origen</th>
 					<th>Albardon</th>
 					<th>Casposo</th>
 					<th>Barker</th>
-					<th>Ullum</th>
+					<th>Ullum ALFA</th>
 					<th>Taller Albardon</th>
 					<th>Total</th>
 					<th>Estado</th>
@@ -160,6 +161,8 @@
 						<td>{getArticuloData(item['Articulo'])['Codigo Proveedor']}</td>
 
 						<td>{item['Articulo']}</td>
+
+						<td>{getArticuloData(item['Articulo'])['Proveedor']}</td>
 
 						<td>{getArticuloData(item['Articulo'])['Marca']}</td>
 
