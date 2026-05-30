@@ -132,6 +132,7 @@
 
 </script>
 
+<div class="compras-container">
 <h1>ADL Compras</h1>
 
 <div class="cards">
@@ -205,9 +206,17 @@
 					<tr on:click={() => pedidoSeleccionado = item}>
 						<td>{item.fechaFormateada}</td>
 						<td>{item['EQUIPO']}</td>
-						<td>{item['ESPECIFICACION']}</td>
+						<td title={item['ESPECIFICACION']}>
+							{item['ESPECIFICACION']?.length > 80
+								? item['ESPECIFICACION'].slice(0, 80) + '...'
+								: item['ESPECIFICACION']}
+						</td>
 						<td>{item['DESCRIPCION']}</td>
-						<td>{item['CODIGO / NUMERO DE PARTE']}</td>
+						<td title={item['CODIGO / NUMERO DE PARTE']}>
+							{item['CODIGO / NUMERO DE PARTE']?.length > 30
+								? item['CODIGO / NUMERO DE PARTE'].slice(0, 30) + '...'
+								: item['CODIGO / NUMERO DE PARTE']}
+						</td>
 						<td>
 							{#if item['ESTADO'] === 'Completado' || item['ESTADO'] === 'Cancelado o Suspendido'}
 								—
@@ -295,29 +304,32 @@
 		</div>
 	</div>
 {/if}
+</div>
 <style>
+	.compras-container {
+		padding: 20px;
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+
 	h1 {
 		font-family: Arial, sans-serif;
 		margin-bottom: 20px;
 	}
 
-	table {
+	 table {
 		width: 100%;
 		border-collapse: collapse;
 		font-family: Arial, sans-serif;
+		table-layout: fixed;
 	}
 
 	th,
 	td {
-		padding: 10px;
+		padding: 6px;
 		border: 1px solid #ddd;
 		text-align: left;
 		vertical-align: top;
-
-		white-space: normal;
-		word-break: break-word;
-		overflow-wrap: break-word;
-		line-height: 1.4;
 	}
 
 	td {
@@ -329,14 +341,9 @@
 	thead th {
 		position: sticky;
 		top: 0;
-		background: #f5f5f5;
-		z-index: 20;
-	}
-
-	th:nth-child(3),
-	td:nth-child(3) {
-		max-width: 800px;
-		width: 800px;
+		background: #d8d7c5;
+		z-index: 50;
+		box-shadow: 0 2px 4px rgba(0,0,0,.1);
 	}
 
 	th:first-child,
@@ -405,7 +412,6 @@
 	gap: 20px;
 	margin-bottom: 20px;
 	flex-wrap: wrap;
-	padding: 14px;
 	}
 
 	.card {
@@ -476,11 +482,14 @@
 
 	.modal {
 		background: white;
-		padding: 30px;
+		padding: 24px;
 		border-radius: 12px;
-		width: 500px;
-		max-width: 90%;
+		width: 900px;
+		max-width: 95vw;
+		max-height: 90vh;
+		overflow-y: auto;
 		font-family: Arial, sans-serif;
+		box-shadow: 0 10px 30px rgba(0,0,0,.25);
 	}
 
 	.modal h2 {
@@ -516,9 +525,10 @@
 	}
 
 	.estado-select {
-		width: 100%;
-		min-width: 140px;
-		max-width: 180px;
+		width: 120px;
+		min-width: 120px;
+		max-width: 120px;
+		font-size: 12px;
 	}
 
 	/* estados */
@@ -565,7 +575,7 @@
 		border: 1px solid #ddd;
 		max-height: 75vh;
 		overflow-y: auto;
-		padding: 14px;
+		padding: 0px;
 	}
 
 	.paginacion {

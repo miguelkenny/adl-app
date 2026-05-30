@@ -9,6 +9,7 @@
 		contenedor: '',
 		tipo: '',
 		marca: '',
+		proveedor: '',
 		unidadMedida: '',
 		precio: '',
 		consumible: '',
@@ -19,7 +20,8 @@
 	async function guardarArticulo() {
 		try {
 			guardando = true;
-
+			console.log(PUBLIC_API_URL);
+			
 			const response = await fetch(PUBLIC_API_URL, {
 				method: 'POST',
 				body: JSON.stringify({
@@ -38,6 +40,7 @@
 				contenedor: '',
 				tipo: '',
 				marca: '',
+				proveedor: '',
 				unidadMedida: '',
 				precio: '',
 				consumible: '',
@@ -96,6 +99,12 @@
 		type="text"
 		placeholder="Marca"
 		bind:value={articulo.marca}
+	/>
+
+	<input
+		type="text"
+		placeholder="Proveedor"
+		bind:value={articulo.proveedor}
 	/>
 
 	<select bind:value={articulo.unidadMedida}>
