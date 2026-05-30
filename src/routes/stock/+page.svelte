@@ -100,7 +100,7 @@
         );
     }
 </script>
-
+<div class="stock-container">
 <div class="header">
 	<h1>Stock General</h1>
 
@@ -218,35 +218,56 @@
 
 	</div>
 {/if}
+</div>
 
 <style>
+	.stock-container {
+		padding: 0 14px;
+	}
+
 	h1 {
 		margin-bottom: 20px;
 	}
 
 	input {
 		padding: 10px;
-		width: 350px;
 		margin-bottom: 20px;
+		width: 100%;
+		max-width: 500px;
+
 		border-radius: 8px;
 		border: 1px solid #ccc;
+		box-sizing: border-box;
 	}
 
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		font-family: Arial;
+		font-family: Arial, sans-serif;
+		table-layout: fixed;
 	}
 
 	th,
 	td {
-		padding: 12px;
+		padding: 8px;
 		border: 1px solid #ddd;
 		text-align: left;
+		vertical-align: top;
+
+		word-break: break-word;
+		overflow-wrap: break-word;
 	}
 
 	tr:hover {
 		background: #f8f9fa;
+	}
+
+	thead th {
+		position: sticky;
+		top: 0;
+		background: #f5f5f5;
+		z-index: 50;
+		box-shadow: 0 2px 4px rgba(0,0,0,.08);
 	}
 
 	.ok {
@@ -294,76 +315,82 @@
     }
 
     .acciones {
-	display: flex;
-	gap: 12px;
-	align-items: center;
-}
+		display: flex;
+		gap: 12px;
+		align-items: center;
+	}
 
-.consumibles-btn {
-	background: #2563eb;
-	color: white;
-	padding: 10px 16px;
-	border-radius: 8px;
-	text-decoration: none;
-	font-weight: bold;
-}
+	.consumibles-btn {
+		background: #2563eb;
+		color: white;
+		padding: 10px 16px;
+		border-radius: 8px;
+		text-decoration: none;
+		font-weight: bold;
+	}
 
-.consumibles-btn:hover {
-	opacity: 0.9;
-}
+	.consumibles-btn:hover {
+		opacity: 0.9;
+	}
 
-.nuevo-btn {
-	background: #198754;
-	color: white;
-	padding: 10px 16px;
-	border-radius: 8px;
-	text-decoration: none;
-	font-weight: bold;
-}
+	.nuevo-btn {
+		background: #198754;
+		color: white;
+		padding: 10px 16px;
+		border-radius: 8px;
+		text-decoration: none;
+		font-weight: bold;
+	}
 
-.nuevo-btn:hover {
-	opacity: 0.9;
-}
+	.nuevo-btn:hover {
+		opacity: 0.9;
+	}
 
-.articulo-btn {
-	background: #7c3aed;
-	color: white;
-	padding: 10px 16px;
-	border-radius: 8px;
-	text-decoration: none;
-	font-weight: bold;
-}
+	.articulo-btn {
+		background: #7c3aed;
+		color: white;
+		padding: 10px 16px;
+		border-radius: 8px;
+		text-decoration: none;
+		font-weight: bold;
+	}
 
-.articulo-btn:hover {
-	opacity: 0.9;
-}
+	.articulo-btn:hover {
+		opacity: 0.9;
+	}
 
-.table-container {
-	width: 100%;
-	overflow-x: auto;
-}
-.paginacion {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 16px;
-	margin-top: 20px;
-	padding-bottom: 20px;
-}
+	.table-container {
+		width: 100%;
+		overflow-x: auto;
+		overflow-y: auto;
+		max-height: 75vh;
 
-.paginacion button {
-	background: #2563eb;
-	color: white;
-	border: none;
-	padding: 10px 16px;
-	border-radius: 8px;
-	cursor: pointer;
-	font-weight: bold;
-}
+		border-radius: 12px;
+		border: 1px solid #ddd;
+	}
 
-.paginacion button:disabled {
-	opacity: 0.5;
-	cursor: not-allowed;
-}
+	.paginacion {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 16px;
+		margin-top: 20px;
+		padding-bottom: 20px;
+	}
+
+	.paginacion button {
+		background: #2563eb;
+		color: white;
+		border: none;
+		padding: 10px 16px;
+		border-radius: 8px;
+		cursor: pointer;
+		font-weight: bold;
+	}
+
+	.paginacion button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
 
 </style>
