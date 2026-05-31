@@ -67,7 +67,9 @@
 	<div class="login-card">
 
 		<h1>ADL ERP</h1>
-
+		<div class="logo-mineria">
+			⚒️
+		</div>
 		<p>Iniciar sesión</p>
 
 		<input
@@ -110,18 +112,34 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: #f3f4f6;
 		padding: 20px;
 		box-sizing: border-box;
+
+		background-image:
+			linear-gradient(
+				rgba(0,0,0,0.55),
+				rgba(0,0,0,0.55)
+			),
+			url('https://cdn4.mineriaydesarrollo.com/s4/2025/12/26/mineriaydesarrollo/images/22/92/229273_6f7ce29082b616db8fc8b595beed865bf84354c6e3acc80bfccf91cac92105a2/md.webp');
+
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
 	}
 
 	.login-card {
-		background: white;
+		background: rgba(255,255,255,0.95);
+		backdrop-filter: blur(10px);
+
 		padding: 40px;
 		border-radius: 16px;
-		box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+		box-shadow:
+			0 10px 30px rgba(0,0,0,0.25);
+
 		width: 100%;
 		max-width: 380px;
+
 		font-family: Arial, sans-serif;
 	}
 
@@ -129,11 +147,15 @@
 		margin-top: 0;
 		margin-bottom: 10px;
 		color: #111827;
+		font-size: 32px;
+		font-weight: 700;
+		text-align: center;
 	}
 
 	p {
 		color: #6b7280;
 		margin-bottom: 24px;
+		text-align: center;
 	}
 
 	input {
@@ -171,4 +193,9 @@
 		font-size: 14px;
 	}
 
+	.logo-mineria {
+		font-size: 42px;
+		text-align: center;
+		margin-bottom: 12px;
+	}
 </style>
