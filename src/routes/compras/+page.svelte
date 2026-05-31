@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { PUBLIC_API_URL_COMPRAS } from '$env/static/public';
     import Loader from '$lib/components/Loader.svelte';
 
 	let solicitudes = [];
@@ -10,8 +11,8 @@
 	let paginaActual = 1;
 	const filasPorPagina = 50;
 
-	const API_URL = 'https://script.google.com/macros/s/AKfycbxzgWF1fHx0_yuIFB0HaJ3oo1pGU8wW_2Wyh-B0-jOo0aO_R-4xnJxSNm5LF9VDzKVwYQ/exec';
-
+	const API_URL = PUBLIC_API_URL_COMPRAS;
+	
 	onMount(async () => {
 		const response = await fetch(API_URL);
 		solicitudes = await response.json();

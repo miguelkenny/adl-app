@@ -247,15 +247,12 @@
 		table-layout: fixed;
 	}
 
-	th,
-	td {
-		padding: 8px;
-		border: 1px solid #ddd;
-		text-align: left;
-		vertical-align: top;
-
-		word-break: break-word;
-		overflow-wrap: break-word;
+	thead th {
+		position: sticky;
+		top: 0;
+		background: #f5f5f5;
+		z-index: 50;
+		box-shadow: 0 2px 4px rgba(0,0,0,.08);
 	}
 
 	tr:hover {
@@ -365,8 +362,8 @@
 		overflow-y: auto;
 		max-height: 75vh;
 
-		border-radius: 12px;
 		border: 1px solid #ddd;
+		border-radius: 12px;
 	}
 
 	.paginacion {
