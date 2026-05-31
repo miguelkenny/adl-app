@@ -132,7 +132,7 @@
 
 	<div class="ultimos">
 		<div class="ultimos-header">
-			<h2>Movimientos registrados hoy</h2>
+			<h2>Últimos Movimientos Registrados</h2>
 
 			{#if !loading}
 				<span>{movimientos.length} registros</span>
