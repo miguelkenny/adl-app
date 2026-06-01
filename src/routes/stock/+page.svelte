@@ -267,6 +267,9 @@
 		box-shadow: 0 2px 4px rgba(0,0,0,.08);
 	}
 
+	tbody {
+		text-align: center;
+	}
 	.ok {
 		background: #d1e7dd;
 		color: #0f5132;

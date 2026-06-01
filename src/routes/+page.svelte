@@ -11,20 +11,21 @@
 
 	const MOVIMIENTOS_API =
 		`${PUBLIC_API_URL}?sheet=Movimientos`;
-
+	
 	const COMPRAS_API =
 		`${PUBLIC_API_URL_COMPRAS}?sheet=Respuestas`;
 
 	onMount(async () => {
 		try {
 
-			const [movRes, comprasRes] = await Promise.all([
+			const [movRes, comprasRes, usuariosRes] = await Promise.all([
 				fetch(MOVIMIENTOS_API),
 				fetch(COMPRAS_API)
 			]);
 
 			movimientos = await movRes.json();
 			compras = await comprasRes.json();
+			usuarios = await usuariosRes.json();
 			
 			calcularIndicadores();
 

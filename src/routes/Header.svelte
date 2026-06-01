@@ -53,14 +53,16 @@
 				</a>
 			</li>
 
-			<li aria-current={page.url.pathname.startsWith('/compras') ? 'page' : undefined}>
-				<a
-					href={resolve('/compras')}
-					onclick={() => (menuOpen = false)}
-				>
-					Compras
-				</a>
-			</li>
+			{#if usuario?.rol === 'admin' || usuario?.rol === 'supervisor'}
+				<li aria-current={page.url.pathname.startsWith('/compras') ? 'page' : undefined}>
+					<a
+						href={resolve('/compras')}
+						onclick={() => (menuOpen = false)}
+					>
+						Compras
+					</a>
+				</li>
+			{/if}
 
 			<li
 				class="dropdown"
