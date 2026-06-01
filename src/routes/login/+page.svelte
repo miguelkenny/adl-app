@@ -112,7 +112,6 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding: 20px;
 		box-sizing: border-box;
 
 		background-image:
