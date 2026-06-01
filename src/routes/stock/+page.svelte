@@ -35,7 +35,7 @@
 			Number(item['Albardon'] || 0) +
 			Number(item['Casposo'] || 0) +
 			Number(item['Barker'] || 0) +
-			Number(item['Ullum'] || 0) +
+			Number(item['Ullum ALFA'] || 0) +
 			Number(item['Taller Albardon'] || 0)
 		);
 	}
