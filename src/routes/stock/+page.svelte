@@ -244,6 +244,7 @@
 		width: 100%;
 		border-collapse: collapse;
 		font-family: Arial, sans-serif;
+		text-align: center;
 		table-layout: fixed;
 	}
 
