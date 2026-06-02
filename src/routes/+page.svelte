@@ -133,10 +133,13 @@
 	</h2>
 
 	<div class="cards">
-		<a href="/compras" class="card compras">
-			<h2>Compras</h2>
-			<p>Solicitudes de materiales y seguimiento</p>
-		</a>
+
+		{#if usuario?.rol === 'admin' || usuario?.rol === 'supervisor'}
+			<a href="/compras" class="card compras">
+				<h2>Compras</h2>
+				<p>Solicitudes de materiales y seguimiento</p>
+			</a>
+		{/if}
 
 		<a href="/mantenimiento" class="card mantenimiento">
 			<h2>Mantenimiento</h2>

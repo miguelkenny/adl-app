@@ -73,6 +73,7 @@
 				</a>
 
 				<ul class="submenu">
+					{#if usuario?.rol === 'admin' || usuario?.rol === 'supervisor'}
 					<li>
 						<a
 							href={resolve('/stock')}
@@ -81,7 +82,7 @@
 							Stock General
 						</a>
 					</li>
-
+					{/if}
 					<li>
 						<a
 							href={resolve('/stock/consumibles')}
