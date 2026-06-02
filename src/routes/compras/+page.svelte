@@ -135,7 +135,9 @@
 
 <div class="compras-container">
 <h1>ADL Compras</h1>
-
+{#if loading}
+	<Loader />
+{:else}
 <div class="cards">
 
 	<div class="card pendientes" on:click={() => filtroEstado = 'Pendiente'}>
@@ -185,9 +187,7 @@
 >
 	Limpiar filtros
 </button>
-{#if loading}
-	<Loader />
-{:else}
+
 	<div class="table-container">
 		<table border="1">
 			<thead>
