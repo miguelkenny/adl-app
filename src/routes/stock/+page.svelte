@@ -8,6 +8,7 @@
 	let busqueda = '';
 	let paginaActual = 1;
 	let itemsPorPagina = 25;
+	let usuario = null;
 
 	import { PUBLIC_API_URL } from '$env/static/public';
 
@@ -23,6 +24,14 @@
 
 			stock = await stockRes.json();
 			articulos = await articulosRes.json();
+
+			const user =
+			localStorage.getItem('user');
+
+			if (user) {
+				usuario = JSON.parse(user);
+			}
+		
 		} catch (error) {
 			console.error(error);
 		} finally {

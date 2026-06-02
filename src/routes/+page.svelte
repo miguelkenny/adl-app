@@ -151,10 +151,12 @@
 			<p>Historial de trabajos realizados</p>
 		</a>
 
-		<a href="/stock" class="card stock">
-			<h2>Stock</h2>
-			<p>Artículos, movimientos y almacenes</p>
-		</a>
+		{#if usuario?.rol === 'admin' || usuario?.rol === 'supervisor'}
+			<a href="/stock" class="card stock">
+				<h2>Stock</h2>
+				<p>Artículos, movimientos y almacenes</p>
+			</a>
+		{/if}
 
 		<a href="/stock/consumibles" class="card consumibles">
 			<h2>Consumibles</h2>
