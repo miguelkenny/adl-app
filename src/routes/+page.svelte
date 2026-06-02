@@ -80,6 +80,20 @@
 <div class="dashboard-container">
 	<h1>ADL ERP Dashboard</h1>
 
+	<div class="welcome">
+		<h2>
+			Hola, {usuario?.usuario}
+		</h2>
+
+		<p>
+			Resumen operativo del sistema
+		</p>
+	</div>
+
+	<h2 class="section-title">
+		Indicadores
+	</h2>
+
 	<div class="stats">
 		<div class="stat-card">
 			<h3>
@@ -114,33 +128,37 @@
 		</div>
 	</div>
 
+	<h2 class="section-title">
+		Módulos
+	</h2>
+
 	<div class="cards">
-		<a href="/compras" class="card">
+		<a href="/compras" class="card compras">
 			<h2>Compras</h2>
 			<p>Solicitudes de materiales y seguimiento</p>
 		</a>
 
-		<a href="/mantenimiento" class="card">
+		<a href="/mantenimiento" class="card mantenimiento">
 			<h2>Mantenimiento</h2>
 			<p>Solicitudes y seguimiento operativo</p>
 		</a>
 
-		<a href="/partes" class="card">
+		<a href="/partes" class="card partes">
 			<h2>Partes</h2>
 			<p>Historial de trabajos realizados</p>
 		</a>
 
-		<a href="/stock" class="card">
+		<a href="/stock" class="card stock">
 			<h2>Stock</h2>
 			<p>Artículos, movimientos y almacenes</p>
 		</a>
 
-		<a href="/stock/consumibles" class="card">
+		<a href="/stock/consumibles" class="card consumibles">
 			<h2>Consumibles</h2>
 			<p>Control agrupado de aceites, grasas y fluidos</p>
 		</a>
 		{#if usuario?.rol === 'admin' || usuario?.rol === 'supervisor'}
-			<a href="/informes/envios-obras" class="card">
+			<a href="/informes/envios-obras" class="card informes">
 				<h2>Informes</h2>
 				<p>Informes de Envíos a Obras</p>
 			</a>
@@ -231,7 +249,8 @@
 		background: white;
 		padding: 24px;
 		border-radius: 14px;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		box-shadow: 0 4px 12px rgba(0,0,0,.08);
+		border-left: 6px solid #2563eb;
 	}
 
 	.stat-card h3 {
@@ -258,6 +277,18 @@
 		color: #16a34a;
 	}
 
+	.warning {
+		border-left-color: #f59e0b;
+	}
+
+	.danger {
+		border-left-color: #ef4444;
+	}
+
+	.success {
+		border-left-color: #22c55e;
+	}
+
 	.cards {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -269,11 +300,22 @@
 		display: block;
 		padding: 24px;
 		border-radius: 14px;
-		background: white;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+		background: linear-gradient(
+			135deg,
+			#ffffff,
+			#f8fafc
+		);
+
+		border: 1px solid #e5e7eb;
+
+		box-shadow:
+			0 4px 12px rgba(0,0,0,.05);
+
 		text-decoration: none;
-		color: black;
-		transition: 0.2s;
+		color: inherit;
+
+		transition: all .2s ease;
 	}
 
 	.card:hover {
@@ -424,6 +466,63 @@
 		border-radius: 50%;
 		animation: spin 0.8s linear infinite;
 	}
+
+	.welcome {
+		background: linear-gradient(
+			135deg,
+			#2563eb,
+			#1d4ed8
+		);
+
+		color: white;
+
+		padding: 24px;
+
+		border-radius: 14px;
+
+		margin-bottom: 24px;
+	}
+
+	.welcome h2 {
+		margin: 0;
+	}
+
+	.welcome p {
+		margin-top: 6px;
+		opacity: .9;
+	}
+
+	.section-title {
+		margin: 28px 0 16px;
+		font-size: 20px;
+		font-weight: 700;
+		color: #374151;
+	}
+
+	.compras {
+		border-top: 4px solid #2563eb;
+	}
+
+	.mantenimiento {
+		border-top: 4px solid #f59e0b;
+	}
+
+	.partes {
+		border-top: 4px solid #8b5cf6;
+	}
+
+	.stock {
+		border-top: 4px solid #22c55e;
+	}
+
+	.consumibles {
+		border-top: 4px solid #14b8a6;
+	}
+
+	.informes {
+		border-top: 4px solid #ec4899;
+	}
+
 	@keyframes pulse {
 		0% {
 			opacity: 0.5;
