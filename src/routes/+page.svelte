@@ -4,6 +4,7 @@
 
 	let movimientos = [];
 	let compras = [];
+	let usuarios = [];
 
 	let movimientosHoy = 0;
 	let comprasPendientes = 0;
@@ -11,6 +12,9 @@
 
 	const MOVIMIENTOS_API =
 		`${PUBLIC_API_URL}?sheet=Movimientos`;
+
+	const USUARIOS_API =
+		`${PUBLIC_API_URL}?sheet=Usuarios`;
 	
 	const COMPRAS_API =
 		`${PUBLIC_API_URL_COMPRAS}?sheet=Respuestas`;
@@ -20,7 +24,8 @@
 
 			const [movRes, comprasRes, usuariosRes] = await Promise.all([
 				fetch(MOVIMIENTOS_API),
-				fetch(COMPRAS_API)
+				fetch(COMPRAS_API),
+				fetch(USUARIOS_API)
 			]);
 
 			movimientos = await movRes.json();
@@ -49,8 +54,6 @@
 			return fechaMovimiento === hoy;
 
 		}).length;
-
-		console.log(movimientosHoy);
 
 		comprasPendientes = compras.filter((item) => {
 
