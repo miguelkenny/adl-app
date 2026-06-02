@@ -409,10 +409,10 @@
 	}
 
 	.cards {
-	display: flex;
-	gap: 20px;
-	margin-bottom: 20px;
-	flex-wrap: wrap;
+		display: flex;
+		gap: 20px;
+		margin-bottom: 20px;
+		flex-wrap: wrap;
 	}
 
 	.card {

@@ -12,12 +12,12 @@
 
 	const MOVIMIENTOS_API =
 		`${PUBLIC_API_URL}?sheet=Movimientos`;
-
-	const USUARIOS_API =
-		`${PUBLIC_API_URL}?sheet=Usuarios`;
 	
 	const COMPRAS_API =
 		`${PUBLIC_API_URL_COMPRAS}?sheet=Respuestas`;
+
+	const USUARIOS_API =
+		`${PUBLIC_API_URL}?sheet=Usuarios`;
 
 	onMount(async () => {
 		try {
@@ -31,6 +31,7 @@
 			movimientos = await movRes.json();
 			compras = await comprasRes.json();
 			usuarios = await usuariosRes.json();
+			console.log(movimientos);
 			
 			calcularIndicadores();
 
@@ -131,6 +132,11 @@
 		<a href="/stock/consumibles" class="card">
 			<h2>Consumibles</h2>
 			<p>Control agrupado de aceites, grasas y fluidos</p>
+		</a>
+
+		<a href="/informes/envios-obras" class="card">
+			<h2>Informes</h2>
+			<p>Informes de Envíos a Obras</p>
 		</a>
 	</div>
 

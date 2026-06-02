@@ -1,0 +1,336 @@
+<script>
+	import { onMount } from 'svelte';
+	import { PUBLIC_API_URL } from '$env/static/public';
+	import Loader from '$lib/components/Loader.svelte';
+	
+	const MOV_API =
+		`${PUBLIC_API_URL}?sheet=Movimientos`;
+
+	let loading = true;
+
+	let movimientos = [];
+
+	let obraFiltro = '';
+	let fechaDesde = '';
+	let fechaHasta = '';
+
+	let obras = [];
+
+	onMount(async () => {
+
+		try {
+
+			const response =
+				await fetch(MOV_API);
+
+			movimientos =
+				await response.json();
+
+			obras = [
+				...new Set(
+					movimientos
+						.filter(
+							(m) =>
+								m.Tipo === 'TRANSFERENCIA'
+						)
+						.map((m) => m.Destino)
+						.filter(Boolean)
+				)
+			].sort();
+
+		} catch (error) {
+
+			console.error(error);
+
+		} finally {
+
+			loading = false;
+
+		}
+	});
+
+	function cumpleFecha(fecha) {
+
+		if (!fecha) return false;
+
+		if (
+			fechaDesde &&
+			fecha < fechaDesde
+		)
+			return false;
+
+		if (
+			fechaHasta &&
+			fecha > fechaHasta
+		)
+			return false;
+
+		return true;
+	}
+
+	$: consumos =
+		movimientos.filter((m) => {
+
+			if (
+				m.Tipo !== 'TRANSFERENCIA' 
+			)
+				return false;
+
+			if (
+				obraFiltro &&
+				m.Destino !== obraFiltro
+			)
+				return false;
+
+			return cumpleFecha(
+				m.Fecha
+			);
+		});
+
+	$: totalConsumo =
+		consumos.reduce(
+			(acc, item) =>
+				acc +
+				(Number(item.Total) || 0),
+			0
+		);
+
+	$: resumenArticulos =
+		Object.values(
+			consumos.reduce(
+				(acc, item) => {
+
+					if (
+						!acc[item.Articulo]
+					) {
+
+						acc[item.Articulo] = {
+
+							articulo:
+								item.Articulo,
+
+							cantidad: 0,
+
+							total: 0
+						};
+					}
+
+					acc[item.Articulo]
+						.cantidad +=
+						Number(
+							item.Cantidad
+						);
+
+					acc[item.Articulo]
+						.total +=
+						Number(
+							item.Total
+						);
+
+					return acc;
+
+				},
+				{}
+			)
+		).sort(
+			(a, b) =>
+				b.total - a.total
+		);
+</script>
+
+<h1>
+	Envíos de Materiales por Obra
+</h1>
+<div class="informes-container">
+	{#if loading}
+
+		<Loader />
+
+	{:else}
+
+		<div class="filtros">
+
+			<select bind:value={obraFiltro}>
+
+				<option value="">
+					Todas las obras
+				</option>
+
+				{#each obras as obra}
+
+					<option value={obra}>
+						{obra}
+					</option>
+
+				{/each}
+
+			</select>
+
+			<input
+				type="date"
+				bind:value={fechaDesde}
+			/>
+
+			<input
+				type="date"
+				bind:value={fechaHasta}
+			/>
+
+		</div>
+
+		<div class="card">
+
+			<h2>
+				Envíos Valorizado:
+				${totalConsumo.toLocaleString()}
+			</h2>
+
+		</div>
+
+		<h2>
+			Resumen por Artículo
+		</h2>
+
+		<table>
+
+			<thead>
+
+				<tr>
+
+					<th>Artículo</th>
+					<th>Cantidad</th>
+					<th>Total</th>
+
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				{#each resumenArticulos as item}
+
+					<tr>
+
+						<td>
+							{item.articulo}
+						</td>
+
+						<td>
+							{item.cantidad}
+						</td>
+
+						<td>
+							$
+							{item.total.toLocaleString()}
+						</td>
+
+					</tr>
+
+				{/each}
+
+			</tbody>
+
+		</table>
+
+		<h2>
+			Detalle de Envíos
+		</h2>
+
+		<table>
+
+			<thead>
+
+				<tr>
+
+					<th>Fecha</th>
+					<th>Artículo</th>
+					<th>Origen</th>
+					<th>Destino</th>
+					<th>Cantidad</th>
+					<th>Total</th>
+
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				{#each consumos as item}
+
+					<tr>
+
+						<td>{item.Fecha}</td>
+
+						<td>{item.Articulo}</td>
+
+						<td>{item.Origen}</td>
+
+						<td>{item.Destino}</td>
+
+						<td>{item.Cantidad}</td>
+
+						<td>
+							$
+							{Number(
+								item.Total
+							).toLocaleString()}
+						</td>
+
+					</tr>
+
+				{/each}
+
+			</tbody>
+
+		</table>
+
+	{/if}
+</div>
+<style>
+	.informes-container {
+		padding: 0px 14px;
+	}
+
+	h1 {
+		margin-bottom: 20px;
+	}
+
+	.filtros {
+		display: flex;
+		gap: 10px;
+		margin-bottom: 20px;
+		flex-wrap: wrap;
+	}
+
+	.card {
+		padding: 20px;
+		background: white;
+		border-radius: 10px;
+		margin-bottom: 20px;
+		box-shadow: 0 2px 8px rgba(0,0,0,.05);
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-bottom: 30px;
+		background: white;
+	}
+
+	th,
+	td {
+		padding: 10px;
+		border: 1px solid #ddd;
+	}
+
+	th {
+		background: #f3f4f6;
+	}
+
+	select,
+	input {
+		padding: 10px;
+		border-radius: 8px;
+		border: 1px solid #ddd;
+	}
+</style>
