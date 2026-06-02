@@ -7,7 +7,7 @@
 		`${PUBLIC_API_URL}?sheet=Movimientos`;
 
 	let loading = true;
-
+	
 	let movimientos = [];
 
 	let obraFiltro = '';
@@ -37,6 +37,13 @@
 						.filter(Boolean)
 				)
 			].sort();
+
+			const user =
+			localStorage.getItem('user');
+
+			if (user) {
+				usuario = JSON.parse(user);
+			}
 
 		} catch (error) {
 

@@ -5,6 +5,7 @@
 	let movimientos = [];
 	let compras = [];
 	let usuarios = [];
+	let usuario = null;
 
 	let movimientosHoy = 0;
 	let comprasPendientes = 0;
@@ -21,7 +22,12 @@
 
 	onMount(async () => {
 		try {
+			const user =
+			localStorage.getItem('user');
 
+			if (user) {
+				usuario = JSON.parse(user);
+			}
 			const [movRes, comprasRes, usuariosRes] = await Promise.all([
 				fetch(MOVIMIENTOS_API),
 				fetch(COMPRAS_API),
@@ -31,7 +37,7 @@
 			movimientos = await movRes.json();
 			compras = await comprasRes.json();
 			usuarios = await usuariosRes.json();
-			console.log(movimientos);
+			console.log(usuarios);
 			
 			calcularIndicadores();
 
@@ -133,11 +139,13 @@
 			<h2>Consumibles</h2>
 			<p>Control agrupado de aceites, grasas y fluidos</p>
 		</a>
-
-		<a href="/informes/envios-obras" class="card">
-			<h2>Informes</h2>
-			<p>Informes de Envíos a Obras</p>
-		</a>
+		{#if usuario?.rol === 'admin' || usuario?.rol === 'supervisor'}
+			<a href="/informes/envios-obras" class="card">
+				<h2>Informes</h2>
+				<p>Informes de Envíos a Obras</p>
+			</a>
+		{/if}
+		
 	</div>
 
 	<div class="ultimos">
