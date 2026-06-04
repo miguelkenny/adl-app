@@ -291,6 +291,7 @@
 					<th>Artículo</th>
 					<th>Origen</th>
 					<th>Destino</th>
+					<th>Referencia</th>
 					<th>Cantidad</th>
 					<th>Total</th>
 					<th>Moneda</th>
@@ -314,7 +315,7 @@
 						<td>{item.Origen}</td>
 
 						<td>{item.Destino}</td>
-
+						<td>{item.Referencia}</td>
 						<td>{item.Cantidad}</td>
 
 						<td>
