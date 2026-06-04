@@ -13,7 +13,7 @@
 	let obraFiltro = '';
 	let fechaDesde = '';
 	let fechaHasta = '';
-
+	let usuario = null;
 	let obras = [];
 
 	onMount(async () => {
@@ -37,7 +37,10 @@
 						.filter(Boolean)
 				)
 			].sort();
-
+			console.log(
+				'Primeros movimientos:',
+				movimientos.slice(0, 10)
+			);
 			const user =
 			localStorage.getItem('user');
 
@@ -60,17 +63,22 @@
 
 		if (!fecha) return false;
 
+		const fechaMovimiento =
+			fecha.toString().split('T')[0];
+
 		if (
 			fechaDesde &&
-			fecha < fechaDesde
-		)
+			fechaMovimiento < fechaDesde
+		) {
 			return false;
+		}
 
 		if (
 			fechaHasta &&
-			fecha > fechaHasta
-		)
+			fechaMovimiento > fechaHasta
+		) {
 			return false;
+		}
 
 		return true;
 	}
@@ -78,9 +86,7 @@
 	$: consumos =
 		movimientos.filter((m) => {
 
-			if (
-				m.Tipo !== 'TRANSFERENCIA' 
-			)
+			if (m.Tipo !== 'TRANSFERENCIA')
 				return false;
 
 			if (
@@ -89,10 +95,21 @@
 			)
 				return false;
 
-			return cumpleFecha(
-				m.Fecha
-			);
+			// Ignorar movimientos anteriores al cambio de formato
+			if (
+				!m.Fecha ||
+				!m.Fecha.includes('-')
+			)
+				return false;
+
+			return cumpleFecha(m.Fecha);
+
 		});
+
+		$: console.log(
+			'Transferencias filtradas:',
+			consumos.length
+		);
 
 	$: totalConsumo =
 		consumos.reduce(
@@ -157,6 +174,16 @@
 
 		<div class="filtros">
 
+			<input
+				type="date"
+				bind:value={fechaDesde}
+			/>
+
+			<input
+				type="date"
+				bind:value={fechaHasta}
+			/>
+
 			<select bind:value={obraFiltro}>
 
 				<option value="">
@@ -172,16 +199,6 @@
 				{/each}
 
 			</select>
-
-			<input
-				type="date"
-				bind:value={fechaDesde}
-			/>
-
-			<input
-				type="date"
-				bind:value={fechaHasta}
-			/>
 
 		</div>
 
@@ -266,7 +283,9 @@
 
 					<tr>
 
-						<td>{item.Fecha}</td>
+						<td>
+							{item.Fecha?.split('T')[0]}
+						</td>
 
 						<td>{item.Articulo}</td>
 
