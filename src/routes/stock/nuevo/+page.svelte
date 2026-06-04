@@ -91,7 +91,23 @@
 
 		const articulo = getArticulo(nombre);
 
-		return Number(articulo?.['Precio']) || 0;
+		if (articulo?.['Moneda'] === 'USD') {
+
+			return Number(
+				articulo?.['Precio USD']
+			) || 0;
+		}
+
+		return Number(
+			articulo?.['Precio']
+		) || 0;
+	}
+
+	function getMoneda(nombre) {
+
+		const articulo = getArticulo(nombre);
+
+		return articulo?.['Moneda'] || 'ARS';
 	}
 
 	function getTotalItem(item) {
@@ -135,7 +151,8 @@
 					articulo: item.articulo,
 					cantidad: Number(item.cantidad),
 					precio: getPrecio(item.articulo),
-					total: getTotalItem(item)
+					total: getTotalItem(item),
+					moneda: getMoneda(item.articulo)
 				}))
 			};
 

@@ -74,14 +74,14 @@
 
 				<ul class="submenu">
 					{#if usuario?.rol === 'admin' || usuario?.rol === 'supervisor'}
-					<li>
-						<a
-							href={resolve('/stock')}
-							onclick={() => (menuOpen = false)}
-						>
-							Stock General
-						</a>
-					</li>
+						<li>
+							<a
+								href={resolve('/stock')}
+								onclick={() => (menuOpen = false)}
+							>
+								Stock General
+							</a>
+						</li>
 					{/if}
 					<li>
 						<a

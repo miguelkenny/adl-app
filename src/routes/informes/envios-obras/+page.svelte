@@ -111,13 +111,23 @@
 			consumos.length
 		);
 
-	$: totalConsumo =
-		consumos.reduce(
-			(acc, item) =>
-				acc +
-				(Number(item.Total) || 0),
-			0
-		);
+	$: totalARS =
+		consumos
+			.filter(i => i.Moneda === 'ARS')
+			.reduce(
+				(acc, i) =>
+					acc + (Number(i.Total) || 0),
+				0
+			);
+
+	$: totalUSD =
+		consumos
+			.filter(i => i.Moneda === 'USD')
+			.reduce(
+				(acc, i) =>
+					acc + (Number(i.Total) || 0),
+				0
+			);
 
 	$: resumenArticulos =
 		Object.values(
@@ -203,12 +213,23 @@
 		</div>
 
 		<div class="card">
-
 			<h2>
-				Envíos Valorizado:
-				${totalConsumo.toLocaleString()}
+				Total Enviado ARS
 			</h2>
 
+			<h1>
+				${totalARS.toLocaleString()}
+			</h1>
+		</div>
+
+		<div class="card">
+			<h2>
+				Total Enviado USD
+			</h2>
+
+			<h1>
+				U$S {totalUSD.toLocaleString()}
+			</h1>
 		</div>
 
 		<h2>
@@ -272,6 +293,7 @@
 					<th>Destino</th>
 					<th>Cantidad</th>
 					<th>Total</th>
+					<th>Moneda</th>
 
 				</tr>
 
@@ -301,6 +323,8 @@
 								item.Total
 							).toLocaleString()}
 						</td>
+
+						<td>{item.Moneda}</td>
 
 					</tr>
 

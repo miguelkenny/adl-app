@@ -14,7 +14,9 @@
 		precio: '',
 		consumible: '',
 		stockMinimo: '',
-		notas: ''
+		notas: '',
+		moneda: 'ARS',
+		precioUSD: ''
 	};
 
 	async function guardarArticulo() {
@@ -45,7 +47,9 @@
 				precio: '',
 				consumible: '',
 				stockMinimo: '',
-				notas: ''
+				notas: '',
+				moneda: 'ARS',
+				precioUSD: ''
 			};
 		} catch (error) {
 			console.error(error);
@@ -121,7 +125,17 @@
 		placeholder="Precio"
 		bind:value={articulo.precio}
 	/>
+	<select bind:value={articulo.moneda}>
+		<option value="ARS">ARS</option>
+		<option value="USD">USD</option>
+	</select>
 
+	<input
+		type="number"
+		step="0.01"
+		placeholder="Precio USD"
+		bind:value={articulo.precioUSD}
+	/>
 	<select bind:value={articulo.consumible}>
 		<option value="">Consumible</option>
 		<option>NO</option>
