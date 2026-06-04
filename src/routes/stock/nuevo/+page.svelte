@@ -211,8 +211,14 @@
 
 			{#each almacenes.filter(
 				(a) =>
-					almacenesPermitidos.includes(a['Nombre']) ||
-					user?.rol === 'admin'
+					(
+						almacenesPermitidos.includes(a['Nombre']) ||
+						user?.rol === 'admin'
+					) &&
+					(
+						user?.rol === 'admin' ||
+						a['Nombre'] !== 'Albardon'
+					)
 			) as almacen}
 
 				<option value={almacen['Nombre']}>
