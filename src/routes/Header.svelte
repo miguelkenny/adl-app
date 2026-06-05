@@ -179,6 +179,16 @@
 					Formularios
 				</a>
 			</li>
+
+			<li aria-current={page.url.pathname.startsWith('/feedback') ? 'page' : undefined}>
+				<a
+					href={resolve('/feedback')}
+					onclick={() => (menuOpen = false)}
+				>
+					Feedback
+				</a>
+			</li>
+			
 			<li class="user-info">
 
 				<div class="user-badge">
