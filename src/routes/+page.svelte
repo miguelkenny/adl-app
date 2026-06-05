@@ -167,6 +167,11 @@
 				<h2>Informes</h2>
 				<p>Informes de Envíos a Obras</p>
 			</a>
+
+			<a href="/remitos/ver" class="card remitos">
+				<h2>Remitos</h2>
+				<p>Ver remitos historicos</p>
+			</a>
 		{/if}
 		
 	</div>
@@ -526,6 +531,10 @@
 
 	.informes {
 		border-top: 4px solid #ec4899;
+	}
+
+	.remitos {
+		border-top: 4px solid #4c136d;
 	}
 
 	@keyframes pulse {

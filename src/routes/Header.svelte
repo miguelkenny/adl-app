@@ -26,7 +26,7 @@
 	}
 </script>
 
-<header>
+<header class="app-header">
 	<div class="logo">
 		<a href={resolve('/')}>
 			<h1>ADL / ANDESITA ERP</h1>
@@ -66,11 +66,11 @@
 
 			<li
 				class="dropdown"
-				aria-current={page.url.pathname.startsWith('/stock') ? 'page' : undefined}
+				aria-current={page.url.pathname.startsWith('/stock' || '/informes') ? 'page' : undefined}
 			>
-				<a href={resolve('/stock')}>
+				<span class="menu-title">
 					Stock ▾
-				</a>
+				</span>
 
 				<ul class="submenu">
 					{#if usuario?.rol === 'admin' || usuario?.rol === 'supervisor'}
@@ -100,6 +100,16 @@
 							Nuevo Movimiento
 						</a>
 					</li>
+
+					<li>
+						<a
+							href={resolve('/informes/envios-obras')}
+							onclick={() => (menuOpen = false)}
+						>
+							Envíos a Obras
+						</a>
+					</li>
+
 				</ul>
 			</li>
 
@@ -107,9 +117,9 @@
 				class="dropdown"
 				aria-current={page.url.pathname.startsWith('/mantenimiento') ? 'page' : undefined}
 			>
-				<a href={resolve('/mantenimiento')}>
+				<span class="menu-title">
 					Mantenimiento ▾
-				</a>
+				</span>
 
 				<ul class="submenu">
 					<li>
@@ -141,7 +151,27 @@
 				</ul>
 			</li>
 
-			<li aria-current={page.url.pathname.startsWith('/operaciones') ? 'page' : undefined}>
+			<li
+				class="dropdown"
+				aria-current={page.url.pathname.startsWith('/remitos') ? 'page' : undefined}
+			>
+				<span class="menu-title">
+					Remitos ▾
+				</span>
+
+				<ul class="submenu">
+					<li>
+						<a
+							href={resolve('/remitos/ver')}
+							onclick={() => (menuOpen = false)}
+						>
+							Ver Remitos Historicos
+						</a>
+					</li>
+				</ul>
+			</li>
+
+			<li aria-current={page.url.pathname.startsWith('/formularios') ? 'page' : undefined}>
 				<a
 					href={resolve('/formularios')}
 					onclick={() => (menuOpen = false)}
@@ -246,9 +276,27 @@ li[aria-current='page'] > a {
 	background: #2563eb;
 }
 
+li[aria-current='page'] > .menu-title {
+	background: #2563eb;
+}
+
 /* =========================
 	DROPDOWN DESKTOP
 ========================= */
+
+.menu-title {
+	color: white;
+	padding: 10px 14px;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 14px;
+	display: block;
+	cursor: default;
+}
+
+.menu-title:hover {
+	background: rgba(255,255,255,.08);
+}
 
 .dropdown {
 	position: relative;
@@ -428,5 +476,13 @@ li[aria-current='page'] > a {
 		align-items: flex-start;
 		width: 100%;
 	}
+}
+
+@media print {
+
+	.app-header {
+		display: none !important;
+	}
+
 }
 </style>

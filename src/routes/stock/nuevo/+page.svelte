@@ -131,6 +131,16 @@
 				return;
 			}
 
+			if (
+				movimiento.tipo === 'TRANSFERENCIA' &&
+				!movimiento.referencia?.startsWith('REM-')
+			) {
+				alert(
+					'Debe colocar N° de Remito en la seccion Referecnia. El remito debe tener formato REM-000000'
+				);
+				return;
+			}
+
 			const itemsValidos = items.filter(
 				(item) =>
 					item.articulo &&
@@ -215,74 +225,77 @@
 	</div>
 
 {:else}
+	<div class="page-card">
+		<div class="cabecera">
 
-	<div class="cabecera">
+			<input
+				type="date"
+				bind:value={movimiento.fecha}
+			/>
 
-		<input
-			type="date"
-			bind:value={movimiento.fecha}
-		/>
+			<select bind:value={movimiento.origen}>
+				<option value="">Origen</option>
 
-		<select bind:value={movimiento.origen}>
-			<option value="">Origen</option>
+				{#each almacenes.filter(
+					(a) =>
+						(
+							almacenesPermitidos.includes(a['Nombre']) ||
+							user?.rol === 'admin'
+						) &&
+						(
+							user?.rol === 'admin' ||
+							a['Nombre'] !== 'Albardon'
+						)
+				) as almacen}
 
-			{#each almacenes.filter(
-				(a) =>
-					(
+					<option value={almacen['Nombre']}>
+						{almacen['Nombre']}
+					</option>
+
+				{/each}
+			</select>
+
+			<select bind:value={movimiento.destino}>
+				<option value="">Destino</option>
+
+				{#each almacenes.filter(
+					(a) =>
 						almacenesPermitidos.includes(a['Nombre']) ||
 						user?.rol === 'admin'
-					) &&
-					(
-						user?.rol === 'admin' ||
-						a['Nombre'] !== 'Albardon'
-					)
-			) as almacen}
+				) as almacen}
 
-				<option value={almacen['Nombre']}>
-					{almacen['Nombre']}
-				</option>
+					<option value={almacen['Nombre']}>
+						{almacen['Nombre']}
+					</option>
 
-			{/each}
-		</select>
+				{/each}
+			</select>
 
-		<select bind:value={movimiento.destino}>
-			<option value="">Destino</option>
+			<select bind:value={movimiento.tipo}>
+				<option>INGRESO</option>
+				<option>TRANSFERENCIA</option>
+				<option>CONSUMO</option>
+				<option>AJUSTE</option>
+				<option>DEVOLUCION</option>
+			</select>
 
-			{#each almacenes.filter(
-				(a) =>
-					almacenesPermitidos.includes(a['Nombre']) ||
-					user?.rol === 'admin'
-			) as almacen}
+			<input
+				bind:value={movimiento.referencia}
+				placeholder={
+					movimiento.tipo === 'TRANSFERENCIA'
+						? 'REM-0001234'
+						: 'Referencia'
+				}
+			/>
 
-				<option value={almacen['Nombre']}>
-					{almacen['Nombre']}
-				</option>
+			<input
+				type="text"
+				placeholder="Observación"
+				bind:value={movimiento.observacion}
+			/>
 
-			{/each}
-		</select>
-
-		<select bind:value={movimiento.tipo}>
-			<option>INGRESO</option>
-			<option>TRANSFERENCIA</option>
-			<option>CONSUMO</option>
-			<option>AJUSTE</option>
-			<option>DEVOLUCION</option>
-		</select>
-
-		<input
-			type="text"
-			placeholder="Referencia"
-			bind:value={movimiento.referencia}
-		/>
-
-		<input
-			type="text"
-			placeholder="Observación"
-			bind:value={movimiento.observacion}
-		/>
-
+		</div>
 	</div>
-
 	<div class="table-container">
 
 		<table>
@@ -369,6 +382,7 @@
 							{#if items.length > 1}
 
 								<button
+									class="eliminar-btn"
 									on:click={() => eliminarItem(index)}
 								>
 									X
@@ -426,16 +440,28 @@
 {/if}
 
 <style>
+	:global(body) {
+		background: #f3f4f6;
+	}
+
+	.page-card {
+		background: white;
+		border-radius: 14px;
+		padding: 24px;
+		box-shadow: 0 4px 12px rgba(0,0,0,.08);
+	}
 
 	h1 {
-		margin-bottom: 20px;
+		margin: 0 0 20px 0;
+		font-size: 28px;
+		color: #111827;
 	}
 
 	.cabecera {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 12px;
-		margin-bottom: 20px;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 14px;
+		margin-bottom: 24px;
 	}
 
 	input,
@@ -454,8 +480,18 @@
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		margin-top: 20px;
 		background: white;
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	thead {
+		background: #eff6ff;
+	}
+
+	th {
+		color: #1e3a8a;
+		font-weight: 700;
 	}
 
 	th,
@@ -468,19 +504,65 @@
 		margin-top: 20px;
 	}
 
+	.acciones button {
+		background: #2563eb;
+		color: white;
+		border: none;
+		font-weight: 300;
+		padding: 12px 18px;
+		cursor: pointer;
+		transition: .2s;
+	}
+
+	.acciones button:hover {
+		background: #1d4ed8;
+	}
+
 	.resumen {
-		margin-top: 20px;
-		font-size: 1.2rem;
+		margin-top: 24px;
+		padding: 20px;
+		background: #eff6ff;
+		border-radius: 12px;
+		border-left: 5px solid #2563eb;
+	}
+
+	.resumen h2 {
+		margin: 0;
+		color: #1e3a8a;
+		font-size: 24px;
+	}
+
+	.eliminar-btn {
+		background: #dc2626;
+		color: white;
+		border: none;
+		width: 36px;
+		height: 36px;
+		border-radius: 8px;
+		cursor: pointer;
 		font-weight: bold;
 	}
 
+	.eliminar-btn:hover {
+		background: #b91c1c;
+	}
+
 	.guardar {
-		margin-top: 20px;
-		background: #198754;
+		margin-top: 24px;
+		background: #16a34a;
 		color: white;
 		border: none;
-		font-weight: bold;
+		padding: 14px 24px;
+		border-radius: 10px;
+		font-size: 15px;
+		font-weight: 700;
 		cursor: pointer;
+		transition: .2s;
+	}
+
+	.guardar:hover {
+		background: #15803d;
+		transform: translateY(-1px);
 	}
 
 	button:disabled {
@@ -499,6 +581,24 @@
 
 	.articulo-cell select {
 		width: 100%;
+	}
+
+	input,
+	select {
+		width: 100%;
+		padding: 12px;
+		border: 1px solid #d1d5db;
+		border-radius: 10px;
+		font-size: 14px;
+		box-sizing: border-box;
+		transition: .2s;
+	}
+
+	input:focus,
+	select:focus {
+		outline: none;
+		border-color: #2563eb;
+		box-shadow: 0 0 0 3px rgba(37,99,235,.15);
 	}
 
 	@media (max-width: 768px) {
