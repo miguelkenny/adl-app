@@ -134,7 +134,7 @@
 </script>
 
 <div class="compras-container">
-<h1>ADL Compras</h1>
+<h1>ADL / ANDESITA - Compras</h1>
 {#if loading}
 	<Loader />
 {:else}
