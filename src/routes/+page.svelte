@@ -78,7 +78,7 @@
 	}
 </script>
 <div class="dashboard-container">
-	<h1>ADL ERP Dashboard</h1>
+	<h1>ADL / ANDESITA - ERP Dashboard</h1>
 
 	<div class="welcome">
 		<h2>
