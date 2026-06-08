@@ -212,26 +212,27 @@
 
 		</div>
 
-		<div class="card">
-			<h2>
-				Total Enviado ARS
-			</h2>
+		<div class="cards-resumen">
+			<div class="card ars">
+				<h2>
+					Total Enviado ARS
+				</h2>
 
-			<h1>
-				${totalARS.toLocaleString()}
-			</h1>
+				<h1>
+					${totalARS.toLocaleString()}
+				</h1>
+			</div>
+
+			<div class="card usd">
+				<h2>
+					Total Enviado USD
+				</h2>
+
+				<h1>
+					U$S {totalUSD.toLocaleString()}
+				</h1>
+			</div>
 		</div>
-
-		<div class="card">
-			<h2>
-				Total Enviado USD
-			</h2>
-
-			<h1>
-				U$S {totalUSD.toLocaleString()}
-			</h1>
-		</div>
-
 		<h2>
 			Detalle de Envíos
 		</h2>
@@ -289,7 +290,7 @@
 			</tbody>
 
 		</table>
-		
+
 		<h2>
 			Resumen por Artículo
 		</h2>
@@ -339,49 +340,119 @@
 </div>
 <style>
 	.informes-container {
-		padding: 0px 14px;
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 20px;
 	}
 
 	h1 {
-		margin-bottom: 20px;
+		margin: 4 0 24px 0;
+		color: #111827;
+		font-size: 28px;
+		font-weight: 700;
 	}
 
-	.filtros {
-		display: flex;
-		gap: 10px;
-		margin-bottom: 20px;
-		flex-wrap: wrap;
+	h2 {
+		margin-top: 30px;
+		margin-bottom: 15px;
+		color: #111827;
+		font-size: 20px;
 	}
 
 	.card {
-		padding: 20px;
-		background: white;
-		border-radius: 10px;
+		padding: 22px;
+		border-radius: 14px;
+		color: white;
 		margin-bottom: 20px;
-		box-shadow: 0 2px 8px rgba(0,0,0,.05);
+		box-shadow: 0 4px 12px rgba(0,0,0,.08);
+	}
+
+	.card h2 {
+		margin: 0;
+		font-size: 16px;
+		font-weight: 600;
+	}
+
+	.card h1 {
+		margin-top: 10px;
+		margin-bottom: 0;
+		font-size: 32px;
+		color: white;
+	}
+
+	.cards-resumen {
+		display: flex;
+		gap: 20px;
+		margin-bottom: 24px;
+		flex-wrap: wrap;
+	}
+
+	.cards-resumen .card {
+		flex: 1 1 300px;
+	}
+
+	.ars {
+		background: #198754;
+	}
+
+	.usd {
+		background: #2563eb;
 	}
 
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		margin-bottom: 30px;
 		background: white;
+		margin-bottom: 30px;
+		box-shadow: 0 2px 8px rgba(0,0,0,.05);
+		border-radius: 12px;
+		overflow: hidden;
 	}
 
-	th,
-	td {
-		padding: 10px;
-		border: 1px solid #ddd;
+	thead {
+		background: #9b9c9c;
 	}
 
 	th {
-		background: #f3f4f6;
+		padding: 14px;
+		text-align: left;
+		font-weight: 600;
+		border-bottom: 1px solid #e5e7eb;
 	}
 
-	select,
-	input {
-		padding: 10px;
-		border-radius: 8px;
-		border: 1px solid #ddd;
+	td {
+		padding: 12px;
+		border-bottom: 1px solid #f3f4f6;
+		color: #374151;
+		font-size: 12px;
+	}
+
+	tbody tr:hover {
+		background: #f9fafb;
+	}
+
+	.filtros {
+		display: flex;
+		gap: 12px;
+		margin-bottom: 24px;
+		flex-wrap: wrap;
+	}
+
+	.filtros input,
+	.filtros select {
+		padding: 12px;
+		border: 1px solid #d1d5db;
+		border-radius: 10px;
+		background: white;
+		font-size: 14px;
+		min-width: 220px;
+		box-sizing: border-box;
+	}
+
+	.filtros input:focus,
+	.filtros select:focus {
+		outline: none;
+		border-color: #2563eb;
+		box-shadow: 0 0 0 3px rgba(37,99,235,.15);
 	}
 </style>
