@@ -233,51 +233,6 @@
 		</div>
 
 		<h2>
-			Resumen por Artículo
-		</h2>
-
-		<table>
-
-			<thead>
-
-				<tr>
-
-					<th>Artículo</th>
-					<th>Cantidad</th>
-					<th>Total</th>
-
-				</tr>
-
-			</thead>
-
-			<tbody>
-
-				{#each resumenArticulos as item}
-
-					<tr>
-
-						<td>
-							{item.articulo}
-						</td>
-
-						<td>
-							{item.cantidad}
-						</td>
-
-						<td>
-							$
-							{item.total.toLocaleString()}
-						</td>
-
-					</tr>
-
-				{/each}
-
-			</tbody>
-
-		</table>
-
-		<h2>
 			Detalle de Envíos
 		</h2>
 
@@ -326,6 +281,51 @@
 						</td>
 
 						<td>{item.Moneda}</td>
+
+					</tr>
+
+				{/each}
+
+			</tbody>
+
+		</table>
+		
+		<h2>
+			Resumen por Artículo
+		</h2>
+
+		<table>
+
+			<thead>
+
+				<tr>
+
+					<th>Artículo</th>
+					<th>Cantidad</th>
+					<th>Total</th>
+
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				{#each resumenArticulos as item}
+
+					<tr>
+
+						<td>
+							{item.articulo}
+						</td>
+
+						<td>
+							{item.cantidad}
+						</td>
+
+						<td>
+							$
+							{item.total.toLocaleString()}
+						</td>
 
 					</tr>
 

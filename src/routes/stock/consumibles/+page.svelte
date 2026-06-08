@@ -7,7 +7,7 @@
 	let stock = [];
 	let articulos = [];
 	let loading = true;
-	console.log(PUBLIC_API_URL);
+	
 	async function cargarDatos() {
 		try {
 			const [stockRes, articulosRes] = await Promise.all([
