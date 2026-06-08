@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
+    import Loader from '$lib/components/Loader.svelte';
 
 	let movimientos = [];
 	let loading = true;
@@ -105,149 +106,154 @@
         ).length;
 </script>
 <div class="movimientos-container">
+    {#if loading}
 
-    <h1>Movimientos de Stock</h1>
-    <div class="cards">
+		<Loader />
 
-        <div
-            class="card ingresos"
-            on:click={() => tipoFiltro = 'INGRESO'}
-        >
-            <h3>Ingresos</h3>
-            <p>{ingresos}</p>
+	{:else}
+        <h1>Movimientos de Stock</h1>
+        <div class="cards">
+
+            <div
+                class="card ingresos"
+                on:click={() => tipoFiltro = 'INGRESO'}
+            >
+                <h3>Ingresos</h3>
+                <p>{ingresos}</p>
+            </div>
+
+            <div
+                class="card transferencias"
+                on:click={() => tipoFiltro = 'TRANSFERENCIA'}
+            >
+                <h3>Transferencias</h3>
+                <p>{transferencias}</p>
+            </div>
+
+            <div
+                class="card consumos"
+                on:click={() => tipoFiltro = 'CONSUMO'}
+            >
+                <h3>Consumos</h3>
+                <p>{consumos}</p>
+            </div>
+
+            <div
+                class="card devoluciones"
+                on:click={() => tipoFiltro = 'DEVOLUCION'}
+            >
+                <h3>Devoluciones</h3>
+                <p>{devoluciones}</p>
+            </div>
+
+        </div>
+        <div class="filtros">
+            <input type="date" bind:value={fechaDesde} />
+            <input type="date" bind:value={fechaHasta} />
+            <input
+                type="text"
+                placeholder="Buscar artículo, referencia, usuario..."
+                bind:value={busqueda}
+            />
+
+            <select bind:value={tipoFiltro}>
+                <option value="">Todos los tipos</option>
+                <option>INGRESO</option>
+                <option>TRANSFERENCIA</option>
+                <option>CONSUMO</option>
+                <option>DEVOLUCION</option>
+            </select>
+
         </div>
 
-        <div
-            class="card transferencias"
-            on:click={() => tipoFiltro = 'TRANSFERENCIA'}
+        <button
+            class="btn-limpiar"
+            on:click={() => {
+                busqueda = '';
+                tipoFiltro = '';
+            }}
         >
-            <h3>Transferencias</h3>
-            <p>{transferencias}</p>
-        </div>
+            Limpiar filtros
+        </button>
 
-        <div
-            class="card consumos"
-            on:click={() => tipoFiltro = 'CONSUMO'}
-        >
-            <h3>Consumos</h3>
-            <p>{consumos}</p>
-        </div>
+        <p class="contador">
+            Mostrando
+            {movimientosFiltrados.length}
+            movimientos
+        </p>
+        <div class="table-container">
+            <table>
 
-        <div
-            class="card devoluciones"
-            on:click={() => tipoFiltro = 'DEVOLUCION'}
-        >
-            <h3>Devoluciones</h3>
-            <p>{devoluciones}</p>
-        </div>
+                <thead>
 
-    </div>
-    <div class="filtros">
-        <input type="date" bind:value={fechaDesde} />
-        <input type="date" bind:value={fechaHasta} />
-        <input
-            type="text"
-            placeholder="Buscar artículo, referencia, usuario..."
-            bind:value={busqueda}
-        />
-
-        <select bind:value={tipoFiltro}>
-            <option value="">Todos los tipos</option>
-            <option>INGRESO</option>
-            <option>TRANSFERENCIA</option>
-            <option>CONSUMO</option>
-            <option>DEVOLUCION</option>
-        </select>
-
-    </div>
-
-    <button
-        class="btn-limpiar"
-        on:click={() => {
-            busqueda = '';
-            tipoFiltro = '';
-        }}
-    >
-        Limpiar filtros
-    </button>
-
-    <p class="contador">
-        Mostrando
-        {movimientosFiltrados.length}
-        movimientos
-    </p>
-    <div class="table-container">
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Artículo</th>
-                    <th>Origen</th>
-                    <th>Destino</th>
-                    <th>Cantidad</th>
-                    <th>Usuario</th>
-                    <th>Referencia</th>
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {#each movimientosFiltrados as item}
-
-                    <tr
-                        on:click={() =>
-                            movimientoSeleccionado = item
-                        }
-                    >
-
-                        <td>
-                            {formatFecha(item.Fecha)}
-                        </td>
-
-                        <td>
-                            <span
-                                class={`badge ${item.Tipo}`}
-                            >
-                                {item.Tipo}
-                            </span>
-                        </td>
-
-                        <td>
-                            {item.Articulo}
-                        </td>
-
-                        <td>
-                            {item.Origen}
-                        </td>
-
-                        <td>
-                            {item.Destino}
-                        </td>
-
-                        <td>
-                            {item.Cantidad}
-                        </td>
-
-                        <td>
-                            {item.Usuario}
-                        </td>
-
-                        <td>
-                            {item.Referencia}
-                        </td>
-
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th>Artículo</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Cantidad</th>
+                        <th>Usuario</th>
+                        <th>Referencia</th>
                     </tr>
 
-                {/each}
+                </thead>
 
-            </tbody>
+                <tbody>
 
-        </table>
-    </div>
+                    {#each movimientosFiltrados as item}
+
+                        <tr
+                            on:click={() =>
+                                movimientoSeleccionado = item
+                            }
+                        >
+
+                            <td>
+                                {formatFecha(item.Fecha)}
+                            </td>
+
+                            <td>
+                                <span
+                                    class={`badge ${item.Tipo}`}
+                                >
+                                    {item.Tipo}
+                                </span>
+                            </td>
+
+                            <td>
+                                {item.Articulo}
+                            </td>
+
+                            <td>
+                                {item.Origen}
+                            </td>
+
+                            <td>
+                                {item.Destino}
+                            </td>
+
+                            <td>
+                                {item.Cantidad}
+                            </td>
+
+                            <td>
+                                {item.Usuario}
+                            </td>
+
+                            <td>
+                                {item.Referencia}
+                            </td>
+
+                        </tr>
+
+                    {/each}
+
+                </tbody>
+
+            </table>
+        </div>
+    {/if}
 </div>
 {#if movimientoSeleccionado}
 
