@@ -103,6 +103,15 @@
 
 					<li>
 						<a
+							href={resolve('/stock/movimientos')}
+							onclick={() => (menuOpen = false)}
+						>
+							Historial Movimientos
+						</a>
+					</li>
+
+					<li>
+						<a
 							href={resolve('/informes/envios-obras')}
 							onclick={() => (menuOpen = false)}
 						>
