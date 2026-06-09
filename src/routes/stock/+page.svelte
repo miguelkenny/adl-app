@@ -280,6 +280,10 @@
 	tbody {
 		text-align: center;
 	}
+
+	td{
+		font-size: 12px;
+	}
 	.ok {
 		background: #d1e7dd;
 		color: #0f5132;
