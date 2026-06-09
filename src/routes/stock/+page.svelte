@@ -504,9 +504,9 @@
 		margin-bottom: 20px;
 	}
 
-	.filtros input,
+	.filtros,
 	.filtros select {
-		padding: 10px;
+		padding: 8px;
 		border-radius: 8px;
 		border: 1px solid #ccc;
 		min-width: 220px;
