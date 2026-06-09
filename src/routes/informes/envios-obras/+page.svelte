@@ -170,6 +170,39 @@
 			(a, b) =>
 				b.total - a.total
 		);
+	
+	$: rankingObras =
+	Object.values(
+		consumos.reduce((acc, item) => {
+
+			if (!acc[item.Destino]) {
+
+				acc[item.Destino] = {
+					obra: item.Destino,
+					totalARS: 0,
+					totalUSD: 0,
+					movimientos: 0
+				};
+			}
+
+			if (item.Moneda === 'USD') {
+
+				acc[item.Destino].totalUSD +=
+					Number(item.Total) || 0;
+
+			} else {
+
+				acc[item.Destino].totalARS +=
+					Number(item.Total) || 0;
+			}
+
+			acc[item.Destino].movimientos++;
+
+			return acc;
+
+		}, {})
+	).sort((a, b) => b.totalARS - a.totalARS);
+
 </script>
 
 <h1>
@@ -233,6 +266,63 @@
 				</h1>
 			</div>
 		</div>
+
+		<h2>Ranking de Obras</h2>
+
+		<div class="ranking-container">
+
+			<table>
+
+				<thead>
+
+					<tr>
+						<th>#</th>
+						<th>Obra</th>
+						<th>Movimientos</th>
+						<th>Total ARS</th>
+						<th>Total USD</th>
+					</tr>
+
+				</thead>
+
+				<tbody>
+
+					{#each rankingObras as obra, index}
+
+						<tr>
+
+							<td>
+								{index + 1}
+							</td>
+
+							<td>
+								<strong>{obra.obra}</strong>
+							</td>
+
+							<td>
+								{obra.movimientos}
+							</td>
+
+							<td>
+								$
+								{obra.totalARS.toLocaleString()}
+							</td>
+
+							<td>
+								U$S
+								{obra.totalUSD.toLocaleString()}
+							</td>
+
+						</tr>
+
+					{/each}
+
+				</tbody>
+
+			</table>
+
+		</div>
+
 		<h2>
 			Detalle de Envíos
 		</h2>
@@ -455,4 +545,18 @@
 		border-color: #2563eb;
 		box-shadow: 0 0 0 3px rgba(37,99,235,.15);
 	}
+
+	.ranking-container {
+		margin-bottom: 30px;
+	}
+
+	.ranking-container table {
+		width: 100%;
+		border-collapse: collapse;
+		background: white;
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: 0 2px 8px rgba(0,0,0,.05);
+	}
+
 </style>
