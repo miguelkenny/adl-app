@@ -6,6 +6,8 @@
 	let articulos = [];
 	let loading = true;
 	let busqueda = '';
+	let almacenFiltro = '';
+	let contenedorFiltro = '';
 	let paginaActual = 1;
 	let itemsPorPagina = 25;
 	let usuario = null;
@@ -68,22 +70,53 @@
 
 	$: stockFiltrado = stock.filter((item) => {
 
-		const busquedaLower = busqueda.toLowerCase();
+		const busquedaLower =
+			busqueda.toLowerCase();
 
-		const articulo = item['Articulo']?.toLowerCase() || '';
+		const articulo =
+			item['Articulo']?.toLowerCase() || '';
 
-		const articuloData = getArticuloData(item['Articulo']);
+		const articuloData =
+			getArticuloData(item['Articulo']);
 
 		const codigoInterno =
-			String(articuloData['Codigo Interno'] || '').toLowerCase();
+			String(
+				articuloData['Codigo Interno'] || ''
+			).toLowerCase();
 
 		const codigoProveedor =
-			String(articuloData['Codigo Proveedor'] || '').toLowerCase();
+			String(
+				articuloData['Codigo Proveedor'] || ''
+			).toLowerCase();
 
-		return (
+		const contenedor =
+			String(
+				articuloData['Contenedor'] || ''
+			);
+
+		const coincideBusqueda =
+
 			articulo.includes(busquedaLower) ||
 			codigoInterno.includes(busquedaLower) ||
-			codigoProveedor.includes(busquedaLower)
+			codigoProveedor.includes(busquedaLower);
+
+		const coincideContenedor =
+
+			!contenedorFiltro ||
+			contenedor === contenedorFiltro;
+
+		let coincideAlmacen = true;
+
+		if (almacenFiltro) {
+
+			coincideAlmacen =
+				Number(item[almacenFiltro] || 0) > 0;
+		}
+
+		return (
+			coincideBusqueda &&
+			coincideContenedor &&
+			coincideAlmacen
 		);
 	});
 
@@ -108,6 +141,15 @@
             ) || {}
         );
     }
+
+	$: contenedores = [
+		...new Set(
+			articulos
+				.map(a => a['Contenedor'])
+				.filter(Boolean)
+		)
+	].sort();
+
 </script>
 <div class="stock-container">
 <div class="header">
@@ -128,11 +170,59 @@
 	</div>
 </div>
 
-<input
-	type="text"
-	placeholder="Buscar artículo..."
-	bind:value={busqueda}
-/>
+<div class="filtros">
+
+	<input
+		type="text"
+		placeholder="Buscar artículo..."
+		bind:value={busqueda}
+	/>
+
+	<select bind:value={almacenFiltro}>
+
+		<option value="">
+			Todos los almacenes
+		</option>
+
+		<option value="Albardon">
+			Albardón
+		</option>
+
+		<option value="Casposo">
+			Casposo
+		</option>
+
+		<option value="Barker">
+			Barker
+		</option>
+
+		<option value="Ullum ALFA">
+			Ullum ALFA
+		</option>
+
+		<option value="Taller Albardon">
+			Taller Albardón
+		</option>
+
+	</select>
+
+	<select bind:value={contenedorFiltro}>
+
+		<option value="">
+			Todos los contenedores
+		</option>
+
+		{#each contenedores as contenedor}
+
+			<option value={contenedor}>
+				{contenedor}
+			</option>
+
+		{/each}
+
+	</select>
+
+</div>
 
 {#if loading}
 	<Loader
@@ -405,6 +495,26 @@
 	.paginacion button:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
+	}
+
+	.filtros {
+		display: flex;
+		gap: 12px;
+		flex-wrap: wrap;
+		margin-bottom: 20px;
+	}
+
+	.filtros input,
+	.filtros select {
+		padding: 10px;
+		border-radius: 8px;
+		border: 1px solid #ccc;
+		min-width: 220px;
+		box-sizing: border-box;
+	}
+
+	.filtros select {
+		background: white;
 	}
 
 </style>

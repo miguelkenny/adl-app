@@ -335,6 +335,7 @@
 
 	td {
 		white-space: normal;
+		font-size: 12px;
 	}
 
 	/* cabecera fija */
