@@ -504,7 +504,7 @@
 		margin-bottom: 20px;
 	}
 
-	.filtros,
+	.filtros input,
 	.filtros select {
 		padding: 8px;
 		border-radius: 8px;
