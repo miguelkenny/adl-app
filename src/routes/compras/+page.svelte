@@ -140,25 +140,25 @@
 {:else}
 <div class="cards">
 
-	<div class="card pendientes" on:click={() => filtroEstado = 'Pendiente'}>
+	<button class="card pendientes" on:click={() => filtroEstado = 'Pendiente'}>
 		<h3>Pendientes</h3>
 		<p>{pendientes}</p>
-	</div>
+	</button>
 
-	<div class="card presupuestando" on:click={() => filtroEstado = 'Presupuestando'}>
+	<button class="card presupuestando" on:click={() => filtroEstado = 'Presupuestando'}>
 		<h3>Presupuestando</h3>
 		<p>{presupuestando}</p>
-	</div>
+	</button>
 
-	<div class="card proceso" on:click={() => filtroEstado = 'En proceso compra'}>
+	<button class="card proceso" on:click={() => filtroEstado = 'En proceso compra'}>
 		<h3>En compra</h3>
 		<p>{enProceso}</p>
-	</div>
+	</button>
 
-	<div class="card completados" on:click={() => filtroEstado = 'Completado'}>
+	<button class="card completados" on:click={() => filtroEstado = 'Completado'}>
 		<h3>Completados</h3>
 		<p>{completados}</p>
-	</div>
+	</button>
 
 </div>
 
@@ -278,6 +278,8 @@
 {/if}
 
 {#if pedidoSeleccionado}
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div class="overlay" on:click={() => pedidoSeleccionado = null}>
 		<div class="modal" on:click|stopPropagation>
 
