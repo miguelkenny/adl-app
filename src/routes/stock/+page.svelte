@@ -51,6 +51,17 @@
 		);
 	}
 
+	function getStockVisible(item) {
+
+		if (!almacenFiltro) {
+			return getTotal(item);
+		}
+
+		return Number(
+			item[almacenFiltro] || 0
+		);
+	}
+
 	function getStockMinimo(nombreArticulo) {
 		const articulo = articulos.find(
 			(item) => item['Nombre del elemento'] === nombreArticulo
@@ -242,12 +253,21 @@
 					<th>Nom. Proveedor</th>
 					<th>Marca</th>
 					<th>Contenedor Origen</th>
-					<th>Albardon</th>
-					<th>Casposo</th>
-					<th>Barker</th>
-					<th>Ullum ALFA</th>
-					<th>Taller Albardon</th>
-					<th>Total</th>
+					{#if !almacenFiltro}
+
+						<th>Albardon</th>
+						<th>Casposo</th>
+						<th>Barker</th>
+						<th>Ullum ALFA</th>
+						<th>Taller Albardon</th>
+						<th>Total</th>
+
+					{:else}
+
+						<th>{almacenFiltro}</th>
+
+					{/if}
+					
 					<th>Estado</th>
 				</tr>
 			</thead>
@@ -267,17 +287,25 @@
 
 						<td>{getArticuloData(item['Articulo'])['Contenedor']}</td>
 
-						<td>{item['Albardon']}</td>
+						{#if !almacenFiltro}
 
-						<td>{item['Casposo']}</td>
+							<td>{item['Albardon']}</td>
 
-						<td>{item['Barker']}</td>
-						
-						<td>{item['Ullum ALFA']}</td>
+							<td>{item['Casposo']}</td>
 
-						<td>{item['Taller Albardon']}</td>
+							<td>{item['Barker']}</td>
 
-						<td>{getTotal(item)}</td>
+							<td>{item['Ullum ALFA']}</td>
+
+							<td>{item['Taller Albardon']}</td>
+
+							<td>{getTotal(item)}</td>
+
+						{:else}
+
+							<td>{item[almacenFiltro] || 0}</td>
+
+						{/if}
 
 						<td>
 							<span class={getEstado(item)}>
@@ -347,12 +375,9 @@
 		table-layout: fixed;
 	}
 
-	thead th {
-		position: sticky;
-		top: 0;
-		background: #f5f5f5;
-		z-index: 50;
-		box-shadow: 0 2px 4px rgba(0,0,0,.08);
+	th{
+		padding: 8px 0;
+		background: #9c9b9b;
 	}
 
 	tr:hover {
@@ -362,7 +387,7 @@
 	thead th {
 		position: sticky;
 		top: 0;
-		background: #f5f5f5;
+		background: #a8a8a8;
 		z-index: 50;
 		box-shadow: 0 2px 4px rgba(0,0,0,.08);
 	}
