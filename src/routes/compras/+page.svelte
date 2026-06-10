@@ -206,18 +206,23 @@
 				{#each solicitudesPaginadas as item}
 					<tr on:click={() => pedidoSeleccionado = item}>
 						<td>{item.fechaFormateada}</td>
+
 						<td>{item['EQUIPO']}</td>
+
 						<td title={item['ESPECIFICACION']}>
 							{item['ESPECIFICACION']?.length > 80
 								? item['ESPECIFICACION'].slice(0, 80) + '...'
 								: item['ESPECIFICACION']}
 						</td>
+
 						<td>{item['DESCRIPCION']}</td>
+
 						<td title={item['CODIGO / NUMERO DE PARTE']}>
 							{item['CODIGO / NUMERO DE PARTE']?.length > 30
 								? item['CODIGO / NUMERO DE PARTE'].slice(0, 30) + '...'
 								: item['CODIGO / NUMERO DE PARTE']}
 						</td>
+
 						<td>
 							{#if item['ESTADO'] === 'Completado' || item['ESTADO'] === 'Cancelado o Suspendido'}
 								—
@@ -225,13 +230,14 @@
 								{diasTranscurridos(item.timestampOriginal)}
 							{/if}
 						</td>
-						<td>
+
+						<td on:click|stopPropagation>
 							<select
 								class={`estado-select ${(item['ESTADO'] || 'Pendiente')
-										.trim()
-										.replace(/\s+/g, '-')
-										.toLowerCase()}`}
-								value={item['ESTADO'] || item['Pendiente']}
+									.trim()
+									.replace(/\s+/g, '-')
+									.toLowerCase()}`}
+								value={item['ESTADO'] || 'Pendiente'}
 								on:change={(e) => actualizarEstado(item, e.target.value)}
 							>
 								<option>Pendiente</option>
@@ -242,6 +248,7 @@
 								<option>Cancelado o Suspendido</option>
 							</select>
 						</td>
+
 					</tr>
 				{/each}
 			</tbody>
@@ -274,7 +281,7 @@
 	<div class="overlay" on:click={() => pedidoSeleccionado = null}>
 		<div class="modal" on:click|stopPropagation>
 
-			<h2>Detalle Solicitud</h2>
+			<h2 class="modal-title">Detalle de Solicitud</h2>
 
 			<p><strong>Fecha:</strong> {pedidoSeleccionado.fechaFormateada}</p>
 			<p><strong>Solicitado Por:</strong> {pedidoSeleccionado['Dirección de correo electrónico']}</p>
@@ -492,6 +499,13 @@
 		overflow-y: auto;
 		font-family: Arial, sans-serif;
 		box-shadow: 0 10px 30px rgba(0,0,0,.25);
+	}
+
+	.modal-title { 
+		font-size: 20px;
+		text-align: center;
+		font-weight: bold;
+		color: #111827;
 	}
 
 	.modal h2 {
