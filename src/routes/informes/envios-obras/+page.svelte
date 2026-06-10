@@ -1,4 +1,5 @@
 <script>
+	import * as XLSX from 'xlsx';
 	import { onMount } from 'svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import Loader from '$lib/components/Loader.svelte';
@@ -15,6 +16,7 @@
 	let fechaHasta = '';
 	let usuario = null;
 	let obras = [];
+	let dolarBNA = 0;
 
 	onMount(async () => {
 
@@ -25,6 +27,26 @@
 
 			movimientos =
 				await response.json();
+
+			try {
+
+				const dolarResponse = await fetch(
+					'https://dolarapi.com/v1/dolares/oficial'
+				);
+
+				const dolarData =
+					await dolarResponse.json();
+
+				dolarBNA =
+					Number(dolarData.venta) || 0;
+
+			} catch (error) {
+
+				console.error(
+					'Error obteniendo dólar',
+					error
+				);
+			}
 
 			obras = [
 				...new Set(
@@ -37,10 +59,7 @@
 						.filter(Boolean)
 				)
 			].sort();
-			console.log(
-				'Primeros movimientos:',
-				movimientos.slice(0, 10)
-			);
+			
 			const user =
 			localStorage.getItem('user');
 
@@ -81,6 +100,65 @@
 		}
 
 		return true;
+	}
+
+	function exportarExcel() {
+
+		const datos = consumos.map(item => ({
+			Fecha: item.Fecha?.split('T')[0],
+			Articulo: item.Articulo,
+			Origen: item.Origen,
+			Destino: item.Destino,
+			Referencia: item.Referencia,
+			Cantidad: item.Cantidad,
+			Total: item.Total,
+			Moneda: item.Moneda,
+			Valor_Reposicion_ARS:
+				item.Moneda === 'USD'
+					? Number(item.Total) * dolarBNA
+					: Number(item.Total),
+			Usuario: item.Usuario
+		}));
+
+		const worksheet =
+			XLSX.utils.json_to_sheet(datos);
+
+		const workbook =
+			XLSX.utils.book_new();
+
+		XLSX.utils.book_append_sheet(
+			workbook,
+			worksheet,
+			'Envios'
+		);
+
+		const fecha =
+			new Date()
+				.toISOString()
+				.slice(0, 10);
+
+		const nombreObra =
+			(obraFiltro || 'Todas')
+				.replace(/\s+/g, '_');
+
+		const infoExtra = [
+			[],
+			['Dólar BNA vendedor', dolarBNA],
+			['Valor de reposición', valorReposicion]
+		];
+
+		XLSX.utils.sheet_add_aoa(
+			worksheet,
+			infoExtra,
+			{
+				origin: datos.length + 2
+			}
+		);
+
+		XLSX.writeFile(
+			workbook,
+			`Envios_${nombreObra}_${fecha}.xlsx`
+		);
 	}
 
 	$: consumos =
@@ -128,6 +206,10 @@
 					acc + (Number(i.Total) || 0),
 				0
 			);
+
+	$: valorReposicion =
+		totalARS +
+		(totalUSD * dolarBNA);
 
 	$: resumenArticulos =
 		Object.values(
@@ -267,6 +349,27 @@
 			</div>
 		</div>
 
+		<div class="card reposicion">
+			<h2>
+				Valor de Reposición
+			</h2>
+
+			<h1>
+				$
+				{valorReposicion.toLocaleString(
+					'es-AR',
+					{
+						maximumFractionDigits: 0
+					}
+				)}
+			</h1>
+
+			<p>
+				Dólar BNA vendedor:
+				${dolarBNA.toLocaleString()}
+			</p>
+		</div>
+
 		<h2>Ranking de Obras</h2>
 
 		<div class="ranking-container">
@@ -320,6 +423,17 @@
 				</tbody>
 
 			</table>
+
+		</div>
+
+		<div class="acciones-reporte">
+
+			<button
+				class="btn-excel"
+				on:click={exportarExcel}
+			>
+				📊 Descargar Excel
+			</button>
 
 		</div>
 
@@ -481,6 +595,15 @@
 		flex: 1 1 300px;
 	}
 
+	.reposicion {
+		background: #dc3545;
+	}
+
+	.reposicion p {
+		margin-top: 8px;
+		font-size: 14px;
+		opacity: .9;
+	}
 	.ars {
 		background: #198754;
 	}
@@ -557,6 +680,27 @@
 		border-radius: 12px;
 		overflow: hidden;
 		box-shadow: 0 2px 8px rgba(0,0,0,.05);
+	}
+
+	.acciones-reporte {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 15px;
+	}
+
+	.btn-excel {
+		background: #198754;
+		color: white;
+		border: none;
+		padding: 12px 18px;
+		border-radius: 10px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: .2s;
+	}
+
+	.btn-excel:hover {
+		background: #157347;
 	}
 
 </style>
