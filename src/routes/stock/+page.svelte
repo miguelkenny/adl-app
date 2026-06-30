@@ -379,7 +379,7 @@
 		padding: 8px 0;
 		background: #9c9b9b;
 	}
-
+	
 	tr:hover {
 		background: #f8f9fa;
 	}
