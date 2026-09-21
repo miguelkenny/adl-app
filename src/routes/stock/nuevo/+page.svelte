@@ -31,6 +31,7 @@
 
 	let items = [
 		{
+			articuloId: '',
 			articulo: '',
 			busqueda: '',
 			cantidad: 1
@@ -68,6 +69,7 @@
 		items = [
 			...items,
 			{
+				articuloId: '',
 				articulo: '',
 				busqueda: '',
 				cantidad: 1
@@ -158,6 +160,7 @@
 			const payload = {
 				movimiento,
 				items: itemsValidos.map((item) => ({
+					articuloId: item.articuloId,
 					articulo: item.articulo,
 					cantidad: Number(item.cantidad),
 					precio: getPrecio(item.articulo),
@@ -177,6 +180,7 @@
 
 			items = [
 				{
+					articuloId: '',
 					articulo: '',
 					busqueda: '',
 					cantidad: 1
@@ -324,8 +328,18 @@
 								bind:value={item.busqueda}
 							/>
 
-							<select bind:value={item.articulo}>
+							<select
+								bind:value={item.articuloId}
+								on:change={() => {
+									const seleccionado = articulos.find(
+										(a) => a['ID'] === item.articuloId
+									);
 
+									item.articulo = seleccionado?.['Nombre del elemento'] || '';
+
+									items = [...items];
+								}}
+							>
 								<option value="">
 									Seleccionar artículo
 								</option>
@@ -345,7 +359,7 @@
 									})
 									.slice(0, 20) as articulo}
 
-									<option value={articulo['Nombre del elemento']}>
+									<option value={articulo['ID']}>
 
 										{articulo['Codigo Interno']} |
 										{articulo['Codigo Proveedor']} |
