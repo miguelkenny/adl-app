@@ -22,7 +22,6 @@
 	async function guardarArticulo() {
 		try {
 			guardando = true;
-			console.log(PUBLIC_API_URL);
 			
 			const response = await fetch(PUBLIC_API_URL, {
 				method: 'POST',
@@ -35,6 +34,8 @@
 			const result = await response.json();
 
 			alert(result.message || 'Artículo creado correctamente');
+			
+			console.log(articulo);
 
 			articulo = {
 				codigoProveedor: '',
@@ -51,6 +52,7 @@
 				moneda: 'ARS',
 				precioUSD: ''
 			};
+			
 		} catch (error) {
 			console.error(error);
 			alert('Error al guardar artículo');

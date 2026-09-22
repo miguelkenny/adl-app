@@ -31,7 +31,6 @@
 
 	let items = [
 		{
-			articuloId: '',
 			articulo: '',
 			busqueda: '',
 			cantidad: 1
@@ -145,6 +144,7 @@
 
 			const itemsValidos = items.filter(
 				(item) =>
+					item.articuloId &&
 					item.articulo &&
 					Number(item.cantidad) > 0
 			);
@@ -157,6 +157,9 @@
 
 			guardando = true;
 
+			console.log('ITEMS ORIGINALES:', items);
+			console.log('ITEMS VALIDOS:', itemsValidos);
+
 			const payload = {
 				movimiento,
 				items: itemsValidos.map((item) => ({
@@ -168,6 +171,8 @@
 					moneda: getMoneda(item.articulo)
 				}))
 			};
+
+			console.log('PAYLOAD MOVIMIENTO:', payload);
 
 			const response = await fetch(PUBLIC_API_URL, {
 				method: 'POST',
