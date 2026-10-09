@@ -79,50 +79,38 @@
 		return 'ok';
 	}
 
+	
 	$: stockFiltrado = stock.filter((item) => {
+		const busquedaNormalizada = normalizar(busqueda);
 
-		const busquedaLower =
-			busqueda.toLowerCase();
+		const articulo = normalizar(item['Articulo']);
+		const articuloData = getArticuloData(item['Articulo']);
 
-		const articulo =
-			item['Articulo']?.toLowerCase() || '';
+		const codigoInterno = normalizar(
+			articuloData['Codigo Interno']
+		);
 
-		const articuloData =
-			getArticuloData(item['Articulo']);
+		const codigoProveedor = normalizar(
+			articuloData['Codigo Proveedor']
+		);
 
-		const codigoInterno =
-			String(
-				articuloData['Codigo Interno'] || ''
-			).toLowerCase();
-
-		const codigoProveedor =
-			String(
-				articuloData['Codigo Proveedor'] || ''
-			).toLowerCase();
-
-		const contenedor =
-			String(
-				articuloData['Contenedor'] || ''
-			);
+		const contenedor = normalizar(
+			articuloData['Contenedor']
+		);
 
 		const coincideBusqueda =
-
-			articulo.includes(busquedaLower) ||
-			codigoInterno.includes(busquedaLower) ||
-			codigoProveedor.includes(busquedaLower);
+			!busquedaNormalizada ||
+			articulo.includes(busquedaNormalizada) ||
+			codigoInterno.includes(busquedaNormalizada) ||
+			codigoProveedor.includes(busquedaNormalizada);
 
 		const coincideContenedor =
-
 			!contenedorFiltro ||
-			contenedor === contenedorFiltro;
+			contenedor === normalizar(contenedorFiltro);
 
-		let coincideAlmacen = true;
-
-		if (almacenFiltro) {
-
-			coincideAlmacen =
-				Number(item[almacenFiltro] || 0) > 0;
-		}
+		const coincideAlmacen =
+			!almacenFiltro ||
+			Number(item[almacenFiltro] || 0) > 0;
 
 		return (
 			coincideBusqueda &&
@@ -144,14 +132,23 @@
 		paginaActual = 1;
 	}
 
-    function getArticuloData(nombreArticulo) {
-        return (
-            articulos.find(
-                (item) =>
-                    item['Nombre del elemento'] === nombreArticulo
-            ) || {}
-        );
-    }
+    function normalizar(valor) {
+		return String(valor ?? '')
+			.trim()
+			.toLowerCase()
+			.replace(/\s+/g, ' ');
+	}
+
+	function getArticuloData(nombreArticulo) {
+		const nombreBuscado = normalizar(nombreArticulo);
+
+		return (
+			articulos.find(
+				(item) =>
+					normalizar(item['Nombre del elemento']) === nombreBuscado
+			) || {}
+		);
+	}
 
 	$: contenedores = [
 		...new Set(
