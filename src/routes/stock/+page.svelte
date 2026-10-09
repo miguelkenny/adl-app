@@ -62,29 +62,33 @@
 		);
 	}
 
-	function getStockMinimo(nombreArticulo) {
-		const articulo = articulos.find(
-			(item) => item['Nombre del elemento'] === nombreArticulo
-		);
-
-		return Number(articulo?.['Stock Minimo']) || 0;
+	
+	function getStockMinimo(itemStock) {
+		const articulo = getArticuloData(itemStock);
+		return Number(articulo['Stock Minimo']) || 0;
 	}
 
 	function getEstado(item) {
 		const total = getTotal(item);
-		const minimo = getStockMinimo(item['Articulo']);
+		const minimo = getStockMinimo(item);
 
 		if (total === 0) return 'agotado';
 		if (total <= minimo) return 'reponer';
 		return 'ok';
 	}
 
+	function normalizar(valor) {
+		return String(valor ?? '')
+			.trim()
+			.toLowerCase()
+			.replace(/\s+/g, ' ');
+	}
 	
 	$: stockFiltrado = stock.filter((item) => {
 		const busquedaNormalizada = normalizar(busqueda);
 
 		const articulo = normalizar(item['Articulo']);
-		const articuloData = getArticuloData(item['Articulo']);
+		const articuloData = getArticuloData(item);
 
 		const codigoInterno = normalizar(
 			articuloData['Codigo Interno']
@@ -119,6 +123,23 @@
 		);
 	});
 
+	$: if (!loading && stock.length && articulos.length) {
+		console.log(
+			'Filas Stock con código 040214-010430:',
+			stock.filter(item =>
+				String(item['Codigo Proveedor'] ?? '').trim() === '040214-010430' ||
+				String(getArticuloData(item['Articulo'])['Codigo Proveedor'] ?? '').trim() === '040214-010430'
+			)
+		);
+
+		console.log(
+			'Filas Articulos con código 040214-010430:',
+			articulos.filter(item =>
+				String(item['Codigo Proveedor'] ?? '').trim() === '040214-010430'
+			)
+		);
+	}
+
 	$: totalPaginas = Math.ceil(
 		stockFiltrado.length / itemsPorPagina
 	);
@@ -132,20 +153,20 @@
 		paginaActual = 1;
 	}
 
-    function normalizar(valor) {
-		return String(valor ?? '')
-			.trim()
-			.toLowerCase()
-			.replace(/\s+/g, ' ');
+    
+	function normalizarCodigo(valor) {
+		return String(valor ?? '').trim();
 	}
 
-	function getArticuloData(nombreArticulo) {
-		const nombreBuscado = normalizar(nombreArticulo);
+	function getArticuloData(itemStock) {
+		const codigoInterno = normalizarCodigo(
+			itemStock?.['Codigo Interno']
+		);
 
 		return (
 			articulos.find(
 				(item) =>
-					normalizar(item['Nombre del elemento']) === nombreBuscado
+					normalizarCodigo(item['Codigo Interno']) === codigoInterno
 			) || {}
 		);
 	}
@@ -272,17 +293,17 @@
 			<tbody>
 				{#each stockPaginado as item}
 					<tr>
-						<td>{getArticuloData(item['Articulo'])['Codigo Interno']}</td>
+						<td>{getArticuloData(item)['Codigo Interno']}</td>
 
-						<td>{getArticuloData(item['Articulo'])['Codigo Proveedor']}</td>
+						<td>{getArticuloData(item)['Codigo Proveedor']}</td>
 
 						<td>{item['Articulo']}</td>
 
-						<td>{getArticuloData(item['Articulo'])['Proveedor']}</td>
+						<td>{getArticuloData(item)['Proveedor']}</td>
 
-						<td>{getArticuloData(item['Articulo'])['Marca']}</td>
+						<td>{getArticuloData(item)['Marca']}</td>
 
-						<td>{getArticuloData(item['Articulo'])['Contenedor']}</td>
+						<td>{getArticuloData(item)['Contenedor']}</td>
 
 						{#if !almacenFiltro}
 
